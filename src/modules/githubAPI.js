@@ -110,18 +110,24 @@ export class GitHubAPI {
 
     static async fetchLanguages(owner, repo) {
         if (!owner || !repo) {
-            throw new Error('Owner and repo are required');
+            return {};
         }
 
-        const url = `${this.BASE_URL}/repos/${owner}/${repo}/languages`;
-        const response = await fetch(url, { headers: this.getHeaders() });
+        try {
+            const url = `${this.BASE_URL}/repos/${owner}/${repo}/languages`;
+            const response = await fetch(url, { headers: this.getHeaders() });
 
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+            if (!response.ok) {
+                console.warn(`Failed to fetch languages: ${response.status}`);
+                return {};
+            }
+
+            const data = await response.json();
+            return data;
+        } catch (error) {
+            console.warn('Error fetching languages:', error);
+            return {};
         }
-
-        const data = await response.json();
-        return data;
     }
 
     static async fetchOpenIssuesCount(owner, repo) {
@@ -215,6 +221,38 @@ export class GitHubAPI {
         } catch (error) {
             console.warn('Error fetching recent pull requests:', error);
             return [];
+        }
+    }
+
+    static async fetchRepositoryTree(owner, repo, defaultBranch) {
+        if (!owner || !repo || !defaultBranch) {
+            return { tree: [] };
+        }
+
+        try {
+            const url = `${this.BASE_URL}/repos/${owner}/${repo}/git/trees/${defaultBranch}?recursive=1`;
+            const response = await fetch(url, { headers: this.getHeaders() });
+
+            if (!response.ok) {
+                if (response.status === 422) {
+                    // Repository too large, try without recursive
+                    const urlNoRecursive = `${this.BASE_URL}/repos/${owner}/${repo}/git/trees/${defaultBranch}`;
+                    const responseNoRecursive = await fetch(urlNoRecursive, { headers: this.getHeaders() });
+                    if (!responseNoRecursive.ok) {
+                        return { tree: [] };
+                    }
+                    const dataNoRecursive = await responseNoRecursive.json();
+                    return dataNoRecursive;
+                }
+                console.warn(`Failed to fetch repository tree: ${response.status}`);
+                return { tree: [] };
+            }
+
+            const data = await response.json();
+            return data;
+        } catch (error) {
+            console.warn('Error fetching repository tree:', error);
+            return { tree: [] };
         }
     }
 }

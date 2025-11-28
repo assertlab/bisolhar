@@ -6,6 +6,8 @@ import { ContributorsTable } from './modules/contributorsTable.js';
 import { ConfigComponent } from './modules/configComponent.js';
 import { HealthComponent } from './modules/healthComponent.js';
 import { ActivityLogs } from './modules/activityLogs.js';
+import { EngineeringMaturity } from './modules/engineeringMaturity.js';
+import { EngineeringMaturityCard } from './modules/engineeringMaturityCard.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     const configComponent = new ConfigComponent('#config-btn');
@@ -16,8 +18,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const contributorsTable = new ContributorsTable('contributors-table');
     const healthComponent = new HealthComponent('health-score');
     const activityLogs = new ActivityLogs('#activity-logs');
+    const engineeringMaturityCard = new EngineeringMaturityCard('#engineering-maturity-card');
 
-    const handleData = (repoData, commits, branches, contributors, pulls, issuesOpenCount, issuesClosedCount, pullRequests, languages, owner, repo, communityProfile) => {
+    const handleData = (repoData, commits, branches, contributors, pulls, issuesOpenCount, issuesClosedCount, pullRequests, languages, owner, repo, communityProfile, repositoryTree) => {
         metricsCards.update(repoData, issuesOpenCount, issuesClosedCount);
         healthComponent.update(communityProfile, repoData.description);
         chartComponent.update(commits);
@@ -25,6 +28,8 @@ document.addEventListener('DOMContentLoaded', () => {
         repoInfoComponent.update(repoData, branches, pulls, owner, repo);
         contributorsTable.update(contributors);
         activityLogs.update(commits, pullRequests);
+        const maturity = EngineeringMaturity.analyze(repositoryTree.tree, pullRequests);
+        engineeringMaturityCard.update(maturity);
     };
 
     new SearchComponent('#search-form', '#search-btn', handleData);
