@@ -7,6 +7,7 @@ export class RepoInfoComponent {
         const createdAt = new Date(repoData.created_at);
         const now = new Date();
         const age = this.calculateAge(createdAt, now);
+        const formattedDate = `${String(createdAt.getDate()).padStart(2, '0')}/${String(createdAt.getMonth() + 1).padStart(2, '0')}/${createdAt.getFullYear()}`;
 
         const totalBranchesDisplay = branches.isMore ? '100+' : branches.count;
         const actualTotalBranches = branches.count;
@@ -24,7 +25,7 @@ export class RepoInfoComponent {
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                         <h3 class="text-lg font-semibold">Idade do Projeto</h3>
-                        <p>${age}</p>
+                        <p>${age} (Desde ${formattedDate})</p>
                     </div>
                     <div>
                         <h3 class="text-lg font-semibold">Estatísticas Extras</h3>
@@ -50,13 +51,17 @@ export class RepoInfoComponent {
 
       let result = '';
       if (years > 0) {
-        result += `${years} ano${years > 1 ? 's' : ''} `;
-      }
-      if (months > 0) {
+        result += `${years} ano${years > 1 ? 's' : ''}`;
+        if (months > 0) {
+          result += ` e ${months} ${months > 1 ? 'meses' : 'mês'}`;
+        }
+      } else if (months > 0) {
         result += `${months} ${months > 1 ? 'meses' : 'mês'}`;
+      } else {
+        result = 'Menos de 1 mês';
       }
 
-      return result.trim() || 'Menos de 1 mes';
+      return result;
    }
 
 }
