@@ -8,8 +8,12 @@ import { HealthComponent } from './modules/healthComponent.js';
 import { ActivityLogs } from './modules/activityLogs.js';
 import { EngineeringMaturity } from './modules/engineeringMaturity.js';
 import { EngineeringMaturityCard } from './modules/engineeringMaturityCard.js';
+import { exportToPDF } from './utils/pdfExporter.js';
 
 document.addEventListener('DOMContentLoaded', () => {
+    let currentOwner = null;
+    let currentRepo = null;
+
     const configComponent = new ConfigComponent('#config-btn');
     const metricsCards = new MetricsCards();
     const chartComponent = new ChartComponent('commits-chart');
@@ -21,6 +25,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const engineeringMaturityCard = new EngineeringMaturityCard('#engineering-maturity-card');
 
     const handleData = (repoData, commits, branches, contributors, pulls, issuesOpenCount, issuesClosedCount, pullRequests, languages, owner, repo, communityProfile, repositoryTree) => {
+        currentOwner = owner;
+        currentRepo = repo;
         metricsCards.update(repoData, issuesOpenCount, issuesClosedCount);
         healthComponent.update(communityProfile, repoData.description);
         chartComponent.update(commits);
@@ -33,4 +39,20 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     new SearchComponent('#search-form', '#search-btn', handleData);
+
+    document.getElementById('export-pdf-btn').addEventListener('click', () => {
+        if (currentOwner && currentRepo) {
+            exportToPDF(currentOwner, currentRepo);
+        } else {
+            alert('Por favor, busque um repositório primeiro para exportar o relatório.');
+        }
+    });
+
+    const helpModal = document.getElementById('help-modal');
+    document.getElementById('help-btn').addEventListener('click', () => {
+        helpModal.showModal();
+    });
+    document.getElementById('close-help').addEventListener('click', () => {
+        helpModal.close();
+    });
 });

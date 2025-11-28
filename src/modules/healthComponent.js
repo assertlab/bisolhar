@@ -37,7 +37,7 @@ export class HealthComponent {
         }
 
         this.container.innerHTML = `
-            <div class="bg-white p-4 rounded shadow mb-8">
+            <div class="bg-white p-4 rounded shadow mb-8 break-inside-avoid">
                 <h3 class="text-lg font-semibold mb-4">Health Score</h3>
                 <div class="text-center mb-4">
                     <span class="text-4xl font-bold ${colorClass}">${percentage}%</span>

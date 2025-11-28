@@ -61,7 +61,7 @@ export class ContributorsTable {
         ` : '';
 
         this.container.innerHTML = `
-            <div class="bg-white p-4 rounded shadow mt-8">
+            <div class="bg-white p-4 rounded shadow mt-8 break-inside-avoid">
                 <h3 class="text-lg font-semibold mb-4">Top Contribuidores</h3>
                 ${alertCard}
                 <table class="w-full border-collapse border border-gray-300">

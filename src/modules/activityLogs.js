@@ -9,14 +9,14 @@ export class ActivityLogs {
 
         this.container.innerHTML = `
             <h2 class="text-xl font-bold mb-4">Auditoria de Atividade</h2>
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <div class="bg-white p-4 rounded shadow">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 break-inside-avoid">
+                <div class="bg-white p-4 rounded shadow break-inside-avoid">
                     <h3 class="text-lg font-semibold mb-3">Últimos 10 Commits</h3>
                     <ul class="space-y-2">
                         ${topCommits.map(commit => this.renderCommit(commit)).join('')}
                     </ul>
                 </div>
-                <div class="bg-white p-4 rounded shadow">
+                <div class="bg-white p-4 rounded shadow break-inside-avoid">
                     <h3 class="text-lg font-semibold mb-3">Últimos 10 PRs</h3>
                     <ul class="space-y-2">
                         ${topPRs.map(pr => this.renderPR(pr)).join('')}

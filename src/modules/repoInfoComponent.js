@@ -17,7 +17,7 @@ export class RepoInfoComponent {
         const repoUrl = `https://github.com/${owner}/${repo}`;
 
         this.container.innerHTML = `
-            <div class="bg-white p-6 rounded shadow mb-8">
+            <div class="bg-white p-6 rounded shadow mb-8 break-inside-avoid">
                 <h2 class="text-xl font-bold mb-2">
                     <a href="${repoUrl}" target="_blank" class="text-blue-600 hover:underline">${repoData.name}</a>
                 </h2>

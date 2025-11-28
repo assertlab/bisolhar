@@ -7,12 +7,17 @@
     <title>Bisolhador Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </head>
 <body class="min-h-screen bg-gray-100 flex flex-col">
     <header class="bg-white shadow-md py-4">
         <div class="container mx-auto px-4 flex justify-between items-center">
             <h1 class="text-2xl font-bold text-gray-900">Bisolhador</h1>
-            <button id="config-btn" class="text-gray-500 hover:text-gray-700 text-2xl">⚙️</button>
+            <div>
+                <button id="export-pdf-btn" class="bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded mr-2">📄 Baixar Relatório</button>
+                <button id="help-btn" class="text-gray-500 hover:text-gray-700 text-2xl mr-2">?</button>
+                <button id="config-btn" class="text-gray-500 hover:text-gray-700 text-2xl">⚙️</button>
+            </div>
         </div>
     </header>
     <main class="flex-1 container mx-auto px-4 py-8">
@@ -21,36 +26,36 @@
             <button id="search-btn" type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Buscar</button>
         </form>
         <div id="repo-info"></div>
-        <div id="metrics" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
-            <div id="stars-card" class="bg-white p-4 rounded shadow">
+        <div id="metrics" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mb-8 break-inside-avoid">
+            <div id="stars-card" class="bg-white p-4 rounded shadow break-inside-avoid">
                 <h3 class="text-lg font-semibold">Stars</h3>
                 <p id="stars-value" class="text-2xl">-</p>
             </div>
-            <div id="forks-card" class="bg-white p-4 rounded shadow">
+            <div id="forks-card" class="bg-white p-4 rounded shadow break-inside-avoid">
                 <h3 class="text-lg font-semibold">Forks</h3>
                 <p id="forks-value" class="text-2xl">-</p>
             </div>
-            <div id="issues-card" class="bg-white p-4 rounded shadow">
+            <div id="issues-card" class="bg-white p-4 rounded shadow break-inside-avoid">
                 <h3 class="text-lg font-semibold">Open Issues</h3>
                 <p id="issues-value" class="text-2xl">-</p>
             </div>
-            <div id="closed-issues-card" class="bg-white p-4 rounded shadow">
+            <div id="closed-issues-card" class="bg-white p-4 rounded shadow break-inside-avoid">
                 <h3 class="text-lg font-semibold">Closed Issues</h3>
                 <p id="closed-issues-value" class="text-2xl">-</p>
                 <p id="resolution-rate" class="text-sm text-gray-600"></p>
             </div>
-            <div id="engineering-maturity-card" class="bg-white p-4 rounded shadow">
+            <div id="engineering-maturity-card" class="bg-white p-4 rounded shadow break-inside-avoid">
                 <h3 class="text-lg font-semibold">Maturidade de Engenharia</h3>
                 <div id="maturity-badges" class="flex flex-wrap gap-1"></div>
             </div>
         </div>
         <div id="health-score"></div>
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <div class="bg-white p-4 rounded shadow">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 break-inside-avoid">
+            <div class="bg-white p-4 rounded shadow break-inside-avoid">
                 <h3 class="text-lg font-semibold mb-4">Commits por Dia da Semana</h3>
                 <canvas id="commits-chart"></canvas>
             </div>
-            <div class="bg-white p-4 rounded shadow">
+            <div class="bg-white p-4 rounded shadow break-inside-avoid">
                 <h3 class="text-lg font-semibold mb-4">Stack Tecnológica</h3>
                 <canvas id="languages-chart"></canvas>
             </div>
@@ -63,6 +68,15 @@
             Bisolhador Dashboard - Projeto de Análise de Repositórios GitHub.<br>© 2025 Vinicius Cardoso Garcia. Licenciado sob MIT.<br>Powered by ASSERT Lab. Orgulhosamente feito em Recife 🦈
         </div>
     </footer>
+
+    <dialog id="help-modal" class="bg-white p-8 rounded shadow max-w-lg w-full">
+        <h2 class="text-xl font-bold mb-4">Como usar o Bisolhador</h2>
+        <p class="mb-4">Para evitar erros de limite (Erro 403), adicione seu GitHub Token na engrenagem ⚙️. Isso aumenta seu limite de 60 para 5.000 consultas/hora.</p>
+        <p class="mb-4">Como criar: <a href="https://github.com/settings/tokens" class="text-blue-600 hover:underline" target="_blank">Link para criar token</a></p>
+        <p class="mb-4">Privacidade: O token fica salvo apenas no navegador do usuário.</p>
+        <button id="close-help" class="mt-4 bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded">Fechar</button>
+    </dialog>
+
     <script type="module" src="src/main.js"></script>
 </body>
 </html>
