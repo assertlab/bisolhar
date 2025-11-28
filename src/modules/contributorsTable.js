@@ -10,6 +10,27 @@ export class ContributorsTable {
         // Calculate total contributions
         const totalContributions = contributors.reduce((sum, c) => sum + c.contributions, 0);
 
+        // Calculate bus factor risk
+        let alertMessage = '';
+        let alertClass = 'bg-green-100';
+        let alertEmoji = '✅';
+        if (contributors.length > 0) {
+            const topContributor = contributors[0];
+            const topPercentage = (topContributor.contributions / totalContributions) * 100;
+            if (topPercentage > 60) {
+                alertEmoji = '🚨';
+                alertClass = 'bg-red-100';
+                alertMessage = `O usuário ${topContributor.login} concentra ${topPercentage.toFixed(1)}% do trabalho. Bus Factor baixo.`;
+            } else if (topPercentage > 40) {
+                alertEmoji = '⚠️';
+                alertClass = 'bg-yellow-100';
+                alertMessage = `O usuário ${topContributor.login} concentra ${topPercentage.toFixed(1)}% do trabalho. Bus Factor moderado.`;
+            } else {
+                alertMessage = `Time balanceado. Nenhum usuário concentra mais de 40% dos commits.`;
+            }
+            alertMessage = `${alertEmoji} ${alertMessage}`;
+        }
+
         const rows = contributors.map(contributor => {
             const percentage = ((contributor.contributions / totalContributions) * 100).toFixed(1);
             return `
@@ -33,9 +54,16 @@ export class ContributorsTable {
             `;
         }).join('');
 
+        const alertCard = contributors.length > 0 && alertMessage ? `
+            <div class="${alertClass} border-l-4 ${alertClass === 'bg-red-100' ? 'border-red-500' : alertClass === 'bg-yellow-100' ? 'border-yellow-500' : 'border-green-500'} p-4 mb-4 rounded text-${alertClass === 'bg-red-100' ? 'red' : alertClass === 'bg-yellow-100' ? 'yellow' : 'green'}-800">
+                <p class="text-sm font-medium">${alertMessage}</p>
+            </div>
+        ` : '';
+
         this.container.innerHTML = `
             <div class="bg-white p-4 rounded shadow mt-8">
                 <h3 class="text-lg font-semibold mb-4">Top Contribuidores</h3>
+                ${alertCard}
                 <table class="w-full border-collapse border border-gray-300">
                     <thead>
                         <tr class="bg-gray-100">

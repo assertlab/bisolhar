@@ -1,3 +1,5 @@
+import { WorkHabits } from './workHabits.js';
+
 export class ChartComponent {
     constructor(canvasId) {
         this.canvas = document.getElementById(canvasId);
@@ -70,6 +72,30 @@ export class ChartComponent {
                 }
             }
         });
+
+        // Display work habits
+        this.displayWorkHabits(commits);
+    }
+
+    displayWorkHabits(commits) {
+        const parent = this.canvas.parentElement;
+
+        // Remove previous habits label if exists
+        const existingLabel = parent.querySelector('.work-habits-label');
+        if (existingLabel) {
+            existingLabel.remove();
+        }
+
+        const habits = WorkHabits.analyze(commits);
+
+        const labelDiv = document.createElement('div');
+        labelDiv.className = 'work-habits-label p-2 mb-2 rounded text-center font-medium';
+        labelDiv.style.backgroundColor = habits.color === 'yellow' ? '#fff3cd' : habits.color === 'green' ? '#d1e7dd' : '#f8f9fa';
+        labelDiv.style.border = '1px solid #ccc';
+        labelDiv.textContent = habits.status;
+
+        // Insert before the canvas
+        parent.insertBefore(labelDiv, this.canvas);
     }
 
     updateLanguages(languages) {
