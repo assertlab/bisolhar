@@ -63,7 +63,7 @@ export class ContributorsTable {
         ` : '';
 
         this.container.innerHTML = `
-            <div class="bg-white p-4 rounded shadow mt-8 break-inside-avoid">
+            <div class="bg-white p-4 rounded shadow mt-8 break-inside-avoid relative hover:z-50 transition-all duration-200">
                 <h3 class="text-lg font-semibold mb-4 flex items-center">Bus Factor${createTooltip('Bus Factor mede o risco de centralização. Se um aluno faz tudo, o risco é alto. Buscamos distribuição do conhecimento.')}</h3>
                 ${alertCard}
                 <table class="w-full border-collapse border border-gray-300">

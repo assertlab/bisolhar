@@ -27,35 +27,35 @@
         </form>
         <div id="repo-info"></div>
         <div id="metrics" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mb-8 break-inside-avoid">
-            <div id="stars-card" class="bg-white p-4 rounded shadow break-inside-avoid">
+            <div id="stars-card" class="bg-white p-4 rounded shadow break-inside-avoid relative hover:z-50 transition-all duration-200">
                 <h3 class="text-lg font-semibold">Stars</h3>
                 <p id="stars-value" class="text-2xl">-</p>
             </div>
-            <div id="forks-card" class="bg-white p-4 rounded shadow break-inside-avoid">
+            <div id="forks-card" class="bg-white p-4 rounded shadow break-inside-avoid relative hover:z-50 transition-all duration-200">
                 <h3 class="text-lg font-semibold">Forks</h3>
                 <p id="forks-value" class="text-2xl">-</p>
             </div>
-            <div id="issues-card" class="bg-white p-4 rounded shadow break-inside-avoid">
+            <div id="issues-card" class="bg-white p-4 rounded shadow break-inside-avoid relative hover:z-50 transition-all duration-200">
                 <h3 class="text-lg font-semibold">Open Issues</h3>
                 <p id="issues-value" class="text-2xl">-</p>
             </div>
-            <div id="closed-issues-card" class="bg-white p-4 rounded shadow break-inside-avoid">
+            <div id="closed-issues-card" class="bg-white p-4 rounded shadow break-inside-avoid overflow-visible relative hover:z-50 transition-all duration-200">
                 <h3 class="text-lg font-semibold flex items-center">Closed Issues<span class="group inline-flex items-center ml-1"><svg class="w-4 h-4 text-gray-400 hover:text-gray-600 cursor-help" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75a.75.75 0 1 0 0 1.5h.008v.75a.75.75 0 0 1-.75.75H9a.75.75 0 0 0 .75.75v.75h-.008a.75.75 0 0 0 0 1.5h.008v-.75a.75.75 0 0 1 .75-.75H12a.75.75 0 0 1 .75.75v.75a.75.75 0 0 0 0 1.5h-.75v-.75a.75.75 0 0 1-.75-.75H9a.75.75 0 0 0-.75.75v.75h.75Z" /></svg><div class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 hidden group-hover:block bg-black text-white text-xs p-2 rounded w-64 z-50">Indica a eficiência do time em resolver problemas reportados. Uma taxa baixa sugere acúmulo de dívida técnica.</div></span></h3>
                 <p id="closed-issues-value" class="text-2xl">-</p>
                 <p id="resolution-rate" class="text-sm text-gray-600"></p>
             </div>
-            <div id="engineering-maturity-card" class="bg-white p-4 rounded shadow break-inside-avoid">
+            <div id="engineering-maturity-card" class="bg-white p-4 rounded shadow break-inside-avoid overflow-visible relative hover:z-50 transition-all duration-200">
                 <h3 class="text-lg font-semibold flex items-center">Maturidade de Engenharia<span class="group inline-flex items-center ml-1"><svg class="w-4 h-4 text-gray-400 hover:text-gray-600 cursor-help" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75a.75.75 0 1 0 0 1.5h.008v.75a.75.75 0 0 1-.75.75H9a.75.75 0 0 0 .75.75v.75h-.008a.75.75 0 0 0 0 1.5h.008v-.75a.75.75 0 0 1 .75-.75H12a.75.75 0 0 1 .75.75v.75a.75.75 0 0 0 0 1.5h-.75v-.75a.75.75 0 0 1-.75-.75H9a.75.75 0 0 0-.75.75v.75h.75Z" /></svg><div class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 hidden group-hover:block bg-black text-white text-xs p-2 rounded w-64 z-50">Verifica a presença de infraestrutura profissional: Testes Automatizados, CI/CD, Linters e Auditoria de Segurança.</div></span></h3>
                 <div id="maturity-badges" class="flex flex-wrap gap-1"></div>
             </div>
         </div>
         <div id="health-score"></div>
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 break-inside-avoid">
-            <div class="bg-white p-4 rounded shadow break-inside-avoid">
+            <div class="bg-white p-4 rounded shadow break-inside-avoid relative hover:z-50 transition-all duration-200">
                 <h3 class="text-lg font-semibold mb-4">Commits por Dia da Semana</h3>
                 <canvas id="commits-chart"></canvas>
             </div>
-            <div class="bg-white p-4 rounded shadow break-inside-avoid">
+            <div class="bg-white p-4 rounded shadow break-inside-avoid relative hover:z-50 transition-all duration-200">
                 <h3 class="text-lg font-semibold mb-4">Stack Tecnológica</h3>
                 <canvas id="languages-chart"></canvas>
             </div>
