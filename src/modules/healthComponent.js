@@ -1,3 +1,5 @@
+import { createTooltip } from '../utils/uiHelpers.js';
+
 export class HealthComponent {
     constructor(containerId) {
         this.container = document.getElementById(containerId);
@@ -38,7 +40,7 @@ export class HealthComponent {
 
         this.container.innerHTML = `
             <div class="bg-white p-4 rounded shadow mb-8 break-inside-avoid">
-                <h3 class="text-lg font-semibold mb-4">Health Score</h3>
+                <h3 class="text-lg font-semibold mb-4 flex items-center">Saúde da Comunidade${createTooltip('Mede a Governança do Repositório. Verifica se o projeto segue os padrões da comunidade do GitHub (Readme, Licença, Templates) para facilitar a colaboração e manutenção.')}</h3>
                 <div class="text-center mb-4">
                     <span class="text-4xl font-bold ${colorClass}">${percentage}%</span>
                 </div>

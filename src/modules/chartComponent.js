@@ -1,4 +1,5 @@
 import { WorkHabits } from './workHabits.js';
+import { createTooltip } from '../utils/uiHelpers.js';
 
 export class ChartComponent {
     constructor(canvasId) {
@@ -75,6 +76,13 @@ export class ChartComponent {
 
         // Display work habits
         this.displayWorkHabits(commits);
+
+        // Update title with tooltip
+        const h3 = this.canvas.parentElement.querySelector('h3');
+        if (h3) {
+            h3.innerHTML = `Hábitos/Crunch${createTooltip('Analisa o horário dos commits. Trabalho excessivo de madrugada ou fins de semana indica má gestão de tempo (Crunch).')}`;
+            h3.classList.add('flex', 'items-center');
+        }
     }
 
     displayWorkHabits(commits) {

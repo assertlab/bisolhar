@@ -1,3 +1,5 @@
+import { createTooltip } from '../utils/uiHelpers.js';
+
 export class ContributorsTable {
     constructor(containerId) {
         this.container = document.getElementById(containerId);
@@ -62,7 +64,7 @@ export class ContributorsTable {
 
         this.container.innerHTML = `
             <div class="bg-white p-4 rounded shadow mt-8 break-inside-avoid">
-                <h3 class="text-lg font-semibold mb-4">Top Contribuidores</h3>
+                <h3 class="text-lg font-semibold mb-4 flex items-center">Bus Factor${createTooltip('Bus Factor mede o risco de centralização. Se um aluno faz tudo, o risco é alto. Buscamos distribuição do conhecimento.')}</h3>
                 ${alertCard}
                 <table class="w-full border-collapse border border-gray-300">
                     <thead>
