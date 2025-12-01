@@ -7,7 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-## [1.2.0] - 2025-01-12
+## [2.1.0] - 2025-12-01
+
+### ✨ Adicionado
+- **Exportação de PDF:** Botão funcional para baixar relatório completo.
+- **Identidade Visual:** Logo oficial do Assert Lab e Favicon.
+
+### 🔧 Corrigido
+- **Dados:** Correção crítica nas queries da Search API (Issues e PRs estavam zerados).
+- **Gráficos:** Ajuste na lógica de 'Smart Trim' do Fluxo de Trabalho para projetos novos.
+- **Deploy:** Correção de caminhos absolutos (assets) para suporte ao GitHub Pages.
+
+---
+
+## [1.2.0] - 2025-11-30
 
 ### ✨ Added
 - **Process Analysis Module**: New section analyzing Pull Request dynamics with Lead Time and Divergence/Convergence metrics
@@ -45,7 +58,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-## [1.1.0] - 2025-01-01
+## [1.1.0] - 2025-11-29
 
 ### ✨ Added
 - **Commit History Flow Chart**: New timeline visualization showing commit activity over the repository's lifetime
@@ -63,7 +76,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-## [1.0.0] - 2024-12-15
+## [1.0.0] - 2024-11-28
 
 # 🎉 Release Notes - Bisolhador Dashboard v1.0.0
 
