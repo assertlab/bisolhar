@@ -56,6 +56,6 @@ export class HealthComponent {
             </div>
         `;
 
-        this.container.innerHTML = createCard("Saúde da Comunidade", contentHtml, "Mede a Governança do Repositório. Verifica se o projeto segue os padrões da comunidade do GitHub (Readme, Licença, Templates) para facilitar a colaboração e manutenção.");
+        this.container.innerHTML = createCard("Saúde da Comunidade", contentHtml, "Nota baseada na presença de 7 itens: Readme, License, Contributing, Description, Code of Conduct, Issue Template e PR Template.");
     }
 }

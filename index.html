@@ -77,6 +77,41 @@
                 <div id="maturity-badges" class="flex flex-wrap gap-1"></div>
             </div>
         </div>
+        <h2 class="text-xl font-bold mt-8 mb-4">Dinâmica de Revisão</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8 break-inside-avoid">
+            <div id="lead-time-card" class="bg-white p-4 rounded shadow break-inside-avoid overflow-visible relative hover:z-50 transition-all duration-200">
+                <h3 class="text-lg font-semibold flex items-center">
+                    <svg class="w-5 h-5 mr-2 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <polyline points="12,6 12,12 16,14"></polyline>
+                    </svg>
+                    Lead Time
+                    <span class="group inline-flex items-center ml-1">
+                        <svg class="w-4 h-4 text-gray-400 hover:text-gray-600 cursor-help" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75a.75.75 0 1 0 0 1.5h.008v.75a.75.75 0 0 1-.75.75H9a.75.75 0 0 0 .75.75v.75h-.008a.75.75 0 0 0 0 1.5h.008v-.75a.75.75 0 0 1 .75-.75H12a.75.75 0 0 1 .75.75v.75a.75.75 0 0 0 0 1.5h-.75v-.75a.75.75 0 0 1-.75-.75H9a.75.75 0 0 0-.75.75v.75h.75Z" />
+                        </svg>
+                        <div class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 hidden group-hover:block bg-black text-white text-xs p-2 rounded w-64 z-50">
+                            Tempo médio para incorporar mudanças ao código principal. Um lead time saudável significa eficiência no processo de desenvolvimento e entrega.
+                        </div>
+                    </span>
+                </h3>
+                <p id="lead-time-value" class="text-2xl">-</p>
+            </div>
+            <div id="divergence-card" class="bg-white p-4 rounded shadow break-inside-avoid overflow-visible relative hover:z-50 transition-all duration-200">
+                <h3 class="text-lg font-semibold flex items-center">Divergência e Convergência
+                    <span class="group inline-flex items-center ml-1">
+                        <svg class="w-4 h-4 text-gray-400 hover:text-gray-600 cursor-help" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75a.75.75 0 1 0 0 1.5h.008v.75a.75.75 0 0 1-.75.75H9a.75.75 0 0 0 .75.75v.75h-.008a.75.75 0 0 0 0 1.5h.008v-.75a.75.75 0 0 1 .75-.75H12a.75.75 0 0 1 .75.75v.75a.75.75 0 0 0 0 1.5h-.75v-.75a.75.75 0 0 1-.75-.75H9a.75.75 0 0 0-.75.75v.75h.75Z" />
+                        </svg>
+                        <div class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 hidden group-hover:block bg-black text-white text-xs p-2 rounded w-64 z-50">
+                            Média de interações (comentários) por PR. Critérios: < 1: Baixa (Silencioso), 1 a 5: Saudável, > 5: Alta (Debate Intenso).
+                        </div>
+                    </span>
+                </h3>
+                <p id="divergence-value" class="text-2xl">-</p>
+                <p id="divergence-category" class="text-sm text-gray-600"></p>
+            </div>
+        </div>
         <div id="health-score"></div>
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 break-inside-avoid">
             <div class="bg-white p-4 rounded shadow break-inside-avoid relative hover:z-50 transition-all duration-200">

@@ -343,4 +343,26 @@ export class GitHubAPI {
             return { tree: [] };
         }
     }
+
+    static async fetchPullRequestStats(owner, repo) {
+        if (!owner || !repo) {
+            return [];
+        }
+
+        try {
+            const url = `${this.BASE_URL}/repos/${owner}/${repo}/pulls?state=all&per_page=20&sort=created&direction=desc`;
+            const response = await fetch(url, { headers: this.getHeaders() });
+
+            if (!response.ok) {
+                console.warn(`Failed to fetch PR stats: ${response.status}`);
+                return [];
+            }
+
+            const data = await response.json();
+            return data;
+        } catch (error) {
+            console.warn('Error fetching PR stats:', error);
+            return [];
+        }
+    }
 }

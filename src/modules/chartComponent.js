@@ -80,7 +80,7 @@ export class ChartComponent {
         // Update title with tooltip
         const h3 = this.canvas.parentElement.querySelector('h3');
         if (h3) {
-            h3.innerHTML = `Hábitos/Crunch${createTooltip('Analisa o horário dos commits. Trabalho excessivo de madrugada ou fins de semana indica má gestão de tempo (Crunch).')}`;
+            h3.innerHTML = `Commits por Dia da Semana (Amostra: ${commits.length} commits)${createTooltip('Analisa o horário dos commits da amostra atual. Critérios: Alerta se > 30% forem de Madrugada (00h-06h) ou > 50% no Fim de Semana.')}`;
             h3.classList.add('flex', 'items-center');
         }
     }

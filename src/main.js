@@ -8,6 +8,8 @@ import { HealthComponent } from './modules/healthComponent.js';
 import { ActivityLogs } from './modules/activityLogs.js';
 import { EngineeringMaturity } from './modules/engineeringMaturity.js';
 import { EngineeringMaturityCard } from './modules/engineeringMaturityCard.js';
+import { ProcessAnalysis } from './modules/processAnalysis.js';
+import { ProcessAnalysisCard } from './modules/processAnalysisCard.js';
 import { exportToPDF } from './utils/pdfExporter.js';
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -24,8 +26,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const commitHistoryChart = new ChartComponent('commit-history-chart');
     const activityLogs = new ActivityLogs('#activity-logs');
     const engineeringMaturityCard = new EngineeringMaturityCard('#engineering-maturity-card');
+    const processAnalysisCard = new ProcessAnalysisCard();
 
-    const handleData = (repoData, commits, branches, contributors, pulls, issuesOpenCount, issuesClosedCount, pullRequests, languages, owner, repo, communityProfile, repositoryTree, releasesCount, commitActivity) => {
+    const handleData = (repoData, commits, branches, contributors, pulls, issuesOpenCount, issuesClosedCount, pullRequests, languages, owner, repo, communityProfile, repositoryTree, releasesCount, commitActivity, pullRequestsStats) => {
         currentOwner = owner;
         currentRepo = repo;
         metricsCards.update(repoData, issuesOpenCount, issuesClosedCount);
@@ -38,6 +41,9 @@ document.addEventListener('DOMContentLoaded', () => {
         activityLogs.update(commits, pullRequests);
         const maturity = EngineeringMaturity.analyze(repositoryTree.tree, pullRequests);
         engineeringMaturityCard.update(maturity);
+        const leadTime = ProcessAnalysis.calculateLeadTime(pullRequestsStats);
+        const divergence = ProcessAnalysis.calculateDivergence(pullRequestsStats);
+        processAnalysisCard.update(leadTime, divergence);
     };
 
     new SearchComponent('#search-form', '#search-btn', handleData);
