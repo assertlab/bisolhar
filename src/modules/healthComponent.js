@@ -1,4 +1,4 @@
-import { createTooltip } from '../utils/uiHelpers.js';
+import { createCard } from '../utils/uiHelpers.js';
 
 export class HealthComponent {
     constructor(containerId) {
@@ -38,25 +38,24 @@ export class HealthComponent {
             colorClass = 'text-yellow-500';
         }
 
-        this.container.innerHTML = `
-            <div class="bg-white p-4 rounded shadow mb-8 break-inside-avoid relative hover:z-50 transition-all duration-200">
-                <h3 class="text-lg font-semibold mb-4 flex items-center">Saúde da Comunidade${createTooltip('Mede a Governança do Repositório. Verifica se o projeto segue os padrões da comunidade do GitHub (Readme, Licença, Templates) para facilitar a colaboração e manutenção.')}</h3>
-                <div class="text-center mb-4">
-                    <span class="text-4xl font-bold ${colorClass}">${percentage}%</span>
-                </div>
-                <div>
-                    <h4 class="font-medium mb-2">Arquivos Encontrados:</h4>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
-                        <p>${checklist.readme ? '✅' : '❌'} README</p>
-                        <p>${checklist.license ? '✅' : '❌'} License</p>
-                        <p>${checklist.contributing ? '✅' : '❌'} Contributing</p>
-                        <p>${checklist.description ? '✅' : '❌'} Description</p>
-                        <p>${checklist.code_of_conduct ? '✅' : '❌'} Code of Conduct</p>
-                        <p>${checklist.issue_template ? '✅' : '❌'} Issue Template</p>
-                        <p>${checklist.pull_request_template ? '✅' : '❌'} PR Template</p>
-                    </div>
+        const contentHtml = `
+            <div class="text-center mb-4">
+                <span class="text-4xl font-bold ${colorClass}">${percentage}%</span>
+            </div>
+            <div>
+                <h4 class="font-medium mb-2">Arquivos Encontrados:</h4>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+                    <p>${checklist.readme ? '✅' : '❌'} README</p>
+                    <p>${checklist.license ? '✅' : '❌'} License</p>
+                    <p>${checklist.contributing ? '✅' : '❌'} Contributing</p>
+                    <p>${checklist.description ? '✅' : '❌'} Description</p>
+                    <p>${checklist.code_of_conduct ? '✅' : '❌'} Code of Conduct</p>
+                    <p>${checklist.issue_template ? '✅' : '❌'} Issue Template</p>
+                    <p>${checklist.pull_request_template ? '✅' : '❌'} PR Template</p>
                 </div>
             </div>
         `;
+
+        this.container.innerHTML = createCard("Saúde da Comunidade", contentHtml, "Mede a Governança do Repositório. Verifica se o projeto segue os padrões da comunidade do GitHub (Readme, Licença, Templates) para facilitar a colaboração e manutenção.");
     }
 }

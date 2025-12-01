@@ -21,18 +21,20 @@ document.addEventListener('DOMContentLoaded', () => {
     const repoInfoComponent = new RepoInfoComponent('repo-info');
     const contributorsTable = new ContributorsTable('contributors-table');
     const healthComponent = new HealthComponent('health-score');
+    const commitHistoryChart = new ChartComponent('commit-history-chart');
     const activityLogs = new ActivityLogs('#activity-logs');
     const engineeringMaturityCard = new EngineeringMaturityCard('#engineering-maturity-card');
 
-    const handleData = (repoData, commits, branches, contributors, pulls, issuesOpenCount, issuesClosedCount, pullRequests, languages, owner, repo, communityProfile, repositoryTree) => {
+    const handleData = (repoData, commits, branches, contributors, pulls, issuesOpenCount, issuesClosedCount, pullRequests, languages, owner, repo, communityProfile, repositoryTree, releasesCount, commitActivity) => {
         currentOwner = owner;
         currentRepo = repo;
         metricsCards.update(repoData, issuesOpenCount, issuesClosedCount);
         healthComponent.update(communityProfile, repoData.description);
         chartComponent.update(commits);
         languagesChartComponent.updateLanguages(languages);
-        repoInfoComponent.update(repoData, branches, pulls, owner, repo);
+        repoInfoComponent.update(repoData, branches, pulls, owner, repo, releasesCount);
         contributorsTable.update(contributors);
+        commitHistoryChart.renderCommitHistoryChart(commitActivity, repoData.created_at);
         activityLogs.update(commits, pullRequests);
         const maturity = EngineeringMaturity.analyze(repositoryTree.tree, pullRequests);
         engineeringMaturityCard.update(maturity);

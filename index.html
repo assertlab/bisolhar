@@ -6,17 +6,45 @@
     <meta name="description" content="Dashboard SPA para análise de métricas de repositórios GitHub">
     <title>Bisolhador Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              shark: '#0f172a',
+              ocean: '#0ea5e9',
+              coral: '#f97316'
+            }
+          }
+        }
+      }
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </head>
-<body class="min-h-screen bg-gray-100 flex flex-col">
-    <header class="bg-white shadow-md py-4">
+<body class="min-h-screen bg-gray-50 flex flex-col">
+    <header class="bg-shark shadow-md py-4">
         <div class="container mx-auto px-4 flex justify-between items-center">
-            <h1 class="text-2xl font-bold text-gray-900">Bisolhador</h1>
-            <div class="flex gap-4">
-                <button id="help-btn" class="bg-blue-100 text-blue-600 hover:bg-blue-200 text-2xl p-2 rounded-full">?</button>
-                <button id="config-btn" class="text-gray-500 hover:text-gray-700 text-2xl p-2">⚙️</button>
-                <button id="export-pdf-btn" class="bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded">📄 Baixar Relatório</button>
+            <h1 class="text-2xl font-bold text-white">Bisolhador</h1>
+            <div class="flex items-center gap-2">
+                <button id="help-btn" class="text-shark hover:text-ocean bg-white hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 rounded-lg text-sm p-2.5 border border-gray-200">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                </button>
+                <button id="config-btn" class="text-shark hover:text-ocean bg-white hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 rounded-lg text-sm p-2.5 border border-gray-200">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                    </svg>
+                </button>
+                <button id="export-pdf-btn" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                    </svg>
+                    Baixar Relatório
+                </button>
             </div>
         </div>
     </header>
@@ -61,11 +89,14 @@
             </div>
         </div>
         <div id="contributors-table"></div>
+        <div class="bg-white p-4 rounded shadow mb-8 break-inside-avoid relative hover:z-50 transition-all duration-200">
+            <canvas id="commit-history-chart"></canvas>
+        </div>
     </main>
     <div id="activity-logs" class="container mx-auto px-4 py-8"></div>
     <footer class="bg-white shadow-md py-4">
         <div class="container mx-auto px-4 text-center text-gray-600">
-            Bisolhador Dashboard - Projeto de Análise de Repositórios GitHub.<br>© 2025 Vinicius Cardoso Garcia. Licenciado sob MIT.<br>Powered by ASSERT Lab. Orgulhosamente feito em Recife 🦈
+            Bisolhador Dashboard - Projeto de Análise de Repositórios GitHub.<br>© 2025 Vinicius Cardoso Garcia. Licenciado sob MIT.<br>Powered by ASSERT Lab. Orgulhosamente feito em Recife 🦈<br><span class="text-sm">Versão 1.1.0</span>
         </div>
     </footer>
 

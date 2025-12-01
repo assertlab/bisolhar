@@ -3,7 +3,7 @@ export class RepoInfoComponent {
         this.container = document.getElementById(containerId);
     }
 
-    update(repoData, branches, pulls, owner, repo) {
+    update(repoData, branches, pulls, owner, repo, releasesCount) {
         const createdAt = new Date(repoData.created_at);
         const now = new Date();
         const age = this.calculateAge(createdAt, now);
@@ -33,6 +33,7 @@ export class RepoInfoComponent {
                             <li>Total de Branches: ${totalBranchesDisplay}</li>
                             <li>Total de PRs: ${totalPRs}</li>
                             <li>PRs por Branch: ${prsPerBranch}</li>
+                            <li>Total de Releases: ${releasesCount}</li>
                         </ul>
                     </div>
                 </div>

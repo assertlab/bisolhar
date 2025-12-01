@@ -32,14 +32,15 @@ export class ActivityLogs {
         const author = commit.commit.author ? commit.commit.author.name : 'Unknown';
         const avatarUrl = commit.author ? commit.author.avatar_url : 'https://via.placeholder.com/32';
         const date = commit.commit.author ? commit.commit.author.date : null;
-        const relativeTime = date ? this.getRelativeTime(new Date(date)) : 'N/A';
+        const formattedDate = date ? new Date(date).toLocaleString('pt-BR', { dateStyle: 'long', timeStyle: 'short' }) : 'N/A';
+        const htmlUrl = commit.html_url || '#';
 
         return `
             <li class="flex items-center space-x-3 p-2 bg-gray-50 rounded">
                 <img src="${avatarUrl}" alt="${author}" class="w-8 h-8 rounded-full">
                 <div class="flex-1 min-w-0">
-                    <p class="text-sm text-gray-900 truncate">${truncatedMessage}</p>
-                    <p class="text-xs text-gray-500">${author} • ${relativeTime}</p>
+                    <a href="${htmlUrl}" target="_blank" class="text-sm text-blue-900 hover:underline truncate block">${truncatedMessage}</a>
+                    <p class="text-xs text-gray-500">${author} • ${formattedDate}</p>
                 </div>
             </li>
         `;
@@ -49,7 +50,8 @@ export class ActivityLogs {
         const title = pr.title;
         const author = pr.user.login;
         const date = new Date(pr.created_at);
-        const relativeTime = this.getRelativeTime(date);
+        const formattedDate = date.toLocaleString('pt-BR', { dateStyle: 'long', timeStyle: 'short' });
+        const htmlUrl = pr.html_url || '#';
 
         let statusBadge = '';
         if (pr.merged_at) {
@@ -63,8 +65,8 @@ export class ActivityLogs {
         return `
             <li class="flex items-center space-x-3 p-2 bg-gray-50 rounded">
                 <div class="flex-1 min-w-0">
-                    <p class="text-sm text-gray-900 truncate">${title}</p>
-                    <p class="text-xs text-gray-500">${author} • ${relativeTime}</p>
+                    <a href="${htmlUrl}" target="_blank" class="text-sm text-blue-900 hover:underline truncate block">${title}</a>
+                    <p class="text-xs text-gray-500">${author} • ${formattedDate}</p>
                 </div>
                 ${statusBadge}
             </li>

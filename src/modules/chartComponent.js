@@ -106,6 +106,86 @@ export class ChartComponent {
         parent.insertBefore(labelDiv, this.canvas);
     }
 
+    renderCommitHistoryChart(commitActivity, createdAt) {
+        const rawData = commitActivity.all || [];
+        const createdDate = new Date(createdAt);
+        const now = new Date();
+        const weeksAlive = Math.ceil((now - createdDate) / (7 * 24 * 60 * 60 * 1000));
+
+        // Smart trim for young projects
+        let trimmedData = rawData;
+        let startIndex = 0;
+        const isYoungProject = weeksAlive < 52;
+        if (isYoungProject) {
+            // Show only from creation - 2 weeks to now, to avoid edge clipping
+            startIndex = Math.max(0, 52 - weeksAlive - 2);
+            trimmedData = rawData.slice(startIndex);
+        }
+
+        // Generate labels based on dates
+        const labels = trimmedData.map((_, index) => {
+            const weeksBack = (trimmedData.length - 1 - index);
+            const pointDate = new Date(now);
+            pointDate.setDate(pointDate.getDate() - weeksBack * 7);
+            return pointDate.toLocaleDateString('pt-BR', { day: '2-digit', month: 'short' });
+        });
+
+        // Destroy previous chart if exists
+        if (this.chart) {
+            this.chart.destroy();
+        }
+
+        // Create new line chart
+        this.chart = new Chart(this.canvas, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Commits por Semana',
+                    data: trimmedData,
+                    borderColor: 'rgba(54, 162, 235, 1}',
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    tension: 0.4,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: isYoungProject ? 'Semanas (desde criação)' : 'Semanas (das últimas 52)'
+                        }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Quantidade de Commits'
+                        }
+                    }
+                }
+            }
+        });
+
+        // Add title
+        const h3 = this.canvas.parentElement.querySelector('h3');
+        if (h3) {
+            h3.innerHTML = isYoungProject ? 'Fluxo de Trabalho - Desde Criação' : 'Fluxo de Trabalho - Últimas 52 Semanas';
+        } else {
+            const title = document.createElement('h3');
+            title.className = 'text-lg font-semibold mb-4';
+            title.textContent = isYoungProject ? 'Fluxo de Trabalho - Desde Criação' : 'Fluxo de Trabalho - Últimas 52 Semanas';
+            this.canvas.parentElement.insertBefore(title, this.canvas);
+        }
+    }
+
     updateLanguages(languages) {
         // Calcular porcentagens iniciais
         const total = Object.values(languages).reduce((sum, bytes) => sum + bytes, 0);

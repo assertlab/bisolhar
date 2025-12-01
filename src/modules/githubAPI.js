@@ -224,6 +224,94 @@ export class GitHubAPI {
         }
     }
 
+
+    static async fetchReleasesCount(owner, repo) {
+        if (!owner || !repo) {
+            return 0;
+        }
+
+        try {
+            const url = `${this.BASE_URL}/repos/${owner}/${repo}/releases?per_page=1`;
+            const response = await fetch(url, { headers: this.getHeaders() });
+
+            if (!response.ok) {
+                if (response.status === 404) {
+                    return 0;
+                }
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            // Parse Link header for last page to get total count
+            const linkHeader = response.headers.get('link');
+            if (linkHeader) {
+                const lastMatch = linkHeader.match(/<([^>]+)>;\s*rel="last"/);
+                if (lastMatch) {
+                    const lastUrl = new URL(lastMatch[1]);
+                    const page = lastUrl.searchParams.get('page');
+                    if (page) {
+                        return parseInt(page);
+                    }
+                }
+            }
+
+            // Fallback for MVP: fetch all releases and count
+            const allUrl = `${this.BASE_URL}/repos/${owner}/${repo}/releases`;
+            const allResponse = await fetch(allUrl, { headers: this.getHeaders() });
+
+            if (!allResponse.ok) {
+                if (allResponse.status === 404) {
+                    return 0;
+                }
+                throw new Error(`HTTP error! status: ${allResponse.status}`);
+            }
+
+            const data = await allResponse.json();
+            const allLinkHeader = allResponse.headers.get('link');
+
+            if (allLinkHeader) {
+                const allLastMatch = allLinkHeader.match(/<([^>]+)>;\s*rel="last"/);
+                if (allLastMatch) {
+                    const allLastUrl = new URL(allLastMatch[1]);
+                    const allPage = allLastUrl.searchParams.get('page');
+                    if (allPage) {
+                        return parseInt(allPage);
+                    }
+                } else {
+                    // If paginated but can't parse last page, assume 30+
+                    return '30+';
+                }
+            } else {
+                // No pagination, exact count
+                return data.length;
+            }
+        } catch (error) {
+            console.warn('Error fetching releases count:', error);
+            return 0;
+        }
+    }
+
+    static async fetchCommitActivity(owner, repo) {
+        if (!owner || !repo) {
+            return { all: [] };
+        }
+
+        try {
+            const url = `${this.BASE_URL}/repos/${owner}/${repo}/stats/participation`;
+            const response = await fetch(url, { headers: this.getHeaders() });
+
+            if (!response.ok) {
+                console.warn(`Failed to fetch commit activity: ${response.status}`);
+                return { all: [] };
+            }
+
+            const data = await response.json();
+            return data;
+        } catch (error) {
+            console.warn('Error fetching commit activity:', error);
+            return { all: [] };
+        }
+    }
+
     static async fetchRepositoryTree(owner, repo, defaultBranch) {
         if (!owner || !repo || !defaultBranch) {
             return { tree: [] };

@@ -29,7 +29,7 @@ export class SearchComponent {
 
         try {
             const repoData = await GitHubAPI.fetchRepository(owner, repo);
-            const [commits, branches, contributors, pulls, issuesOpenCount, issuesClosedCount, pullRequests, languages, communityProfile, repositoryTree] = await Promise.all([
+            const [commits, branches, contributors, pulls, issuesOpenCount, issuesClosedCount, pullRequests, languages, communityProfile, repositoryTree, releasesCount, commitActivity] = await Promise.all([
                 GitHubAPI.fetchCommits(owner, repo),
                 GitHubAPI.fetchBranches(owner, repo),
                 GitHubAPI.fetchContributors(owner, repo),
@@ -39,9 +39,11 @@ export class SearchComponent {
                 GitHubAPI.fetchRecentPullRequests(owner, repo),
                 GitHubAPI.fetchLanguages(owner, repo),
                 GitHubAPI.fetchCommunityProfile(owner, repo),
-                GitHubAPI.fetchRepositoryTree(owner, repo, repoData.default_branch)
+                GitHubAPI.fetchRepositoryTree(owner, repo, repoData.default_branch),
+                GitHubAPI.fetchReleasesCount(owner, repo),
+                GitHubAPI.fetchCommitActivity(owner, repo)
             ]);
-            this.onData(repoData, commits, branches, contributors, pulls, issuesOpenCount, issuesClosedCount, pullRequests, languages, owner, repo, communityProfile, repositoryTree);
+            this.onData(repoData, commits, branches, contributors, pulls, issuesOpenCount, issuesClosedCount, pullRequests, languages, owner, repo, communityProfile, repositoryTree, releasesCount, commitActivity);
         } catch (error) {
             console.error('Erro na busca:', error);
             if (error.message.includes('401')) {
