@@ -12,7 +12,7 @@ export function Header({ onSettingsClick }) {
           <div className="flex-shrink-0 flex items-center gap-3">
             {/* --- NOVO: O LOGO --- */}
             <img
-              src="/logo_assert.png" // O Vite sabe que começa na pasta 'public'
+              src={`${import.meta.env.BASE_URL}logo_assert.png`}
               alt="Powered by ASSERT Lab"
               className="h-8 w-auto" // Altura de 32px (padrão de header)
             />
