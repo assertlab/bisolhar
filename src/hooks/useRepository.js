@@ -1,166 +1,176 @@
-import { useState, useCallback } from 'react';
+import { useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import { githubService } from '../services/githubService.js';
 import { analyzers } from '../utils/analyzers.js';
 
-// Custom Hook for repository data fetching and analysis
+// Repository data fetching function for TanStack Query
+async function fetchRepositoryData(repoName) {
+    if (!repoName || !repoName.includes('/')) {
+        throw new Error('Formato inválido. Use owner/repo');
+    }
+
+    const [owner, repo] = repoName.split('/');
+
+    // First fetch repository data to get default branch
+    const repoData = await githubService.fetchRepository(owner, repo);
+    if (!repoData) {
+        throw new Error('Não foi possível buscar informações do repositório');
+    }
+
+    // Fetch all other data in parallel
+    const results = await Promise.allSettled([
+        githubService.fetchCommits(owner, repo),
+        githubService.fetchBranches(owner, repo),
+        githubService.fetchContributors(owner, repo),
+        githubService.fetchPullRequests(owner, repo),
+        githubService.fetchOpenIssuesCount(owner, repo),
+        githubService.fetchClosedIssuesCount(owner, repo),
+        githubService.fetchRecentPullRequests(owner, repo),
+        githubService.fetchLanguages(owner, repo),
+        githubService.fetchCommunityProfile(owner, repo),
+        githubService.fetchRepositoryTree(owner, repo, repoData.default_branch),
+        githubService.fetchReleasesCount(owner, repo),
+        githubService.fetchCommitActivity(owner, repo),
+        githubService.fetchPullRequestStats(owner, repo),
+        githubService.fetchCodeFrequency(owner, repo),
+        githubService.fetchMergedPRsCount(owner, repo)
+    ]);
+
+    // Extract results with fail-safe handling
+    const commits = results[0]?.status === 'fulfilled' ? results[0].value : [];
+    const branches = results[1]?.status === 'fulfilled' ? results[1].value : { count: 0, zombies: 0 };
+    const contributors = results[2]?.status === 'fulfilled' ? results[2].value : [];
+    const pulls = results[3]?.status === 'fulfilled' ? results[3].value : null;
+    const issuesOpenCount = results[4]?.status === 'fulfilled' ? results[4].value : null;
+    const issuesClosedCount = results[5]?.status === 'fulfilled' ? results[5].value : null;
+    const pullRequests = results[6]?.status === 'fulfilled' ? results[6].value : [];
+    const languages = results[7]?.status === 'fulfilled' ? results[7].value : {};
+    const communityProfile = results[8]?.status === 'fulfilled' ? results[8].value : null;
+    const repositoryTree = results[9]?.status === 'fulfilled' ? results[9].value : { tree: [] };
+    const releasesCount = results[10]?.status === 'fulfilled' ? results[10].value : 0;
+    const commitActivity = results[11]?.status === 'fulfilled' ? results[11].value : { all: [] };
+    const pullRequestsStats = results[12]?.status === 'fulfilled' ? results[12].value : [];
+    const codeFrequency = results[13]?.status === 'fulfilled' ? results[13].value : null;
+    const mergedPRsCount = results[14]?.status === 'fulfilled' ? results[14].value : 0;
+
+    // Get first 10 commits and PRs for activity logs
+    const recentCommits = commits.slice(0, 10);
+    const recentPRs = pullRequests.slice(0, 10);
+
+    // Calculate repository age
+    const createdAt = new Date(repoData.created_at);
+    const now = new Date();
+    const age = calculateAge(createdAt, now);
+    const formattedDate = `${String(createdAt.getDate()).padStart(2, '0')}/${String(createdAt.getMonth() + 1).padStart(2, '0')}/${createdAt.getFullYear()}`;
+
+    // Calculate PRs per branch
+    const totalBranches = branches.count;
+    const prsPerBranch = branches.count === 0 || pulls === null ? 'N/A' : (pulls / totalBranches).toFixed(1);
+
+    // Analyze health score
+    const health = analyzers.calculateHealthScore(communityProfile, repoData.description);
+
+    // Analyze maturity
+    const maturity = analyzers.analyzeEngineeringMaturity(repositoryTree.tree, pullRequests, branches.zombies);
+
+    // Analyze code review
+    const codeReview = analyzers.analyzeCodeReview(pullRequestsStats);
+
+    // Analyze process metrics
+    const leadTime = analyzers.calculateLeadTime(pullRequestsStats);
+    const divergence = analyzers.calculateDivergence(pullRequestsStats);
+
+    // Analyze bus factor
+    const busFactor = analyzers.calculateBusFactor(contributors);
+
+    // Analyze code churn
+    const codeChurn = analyzers.calculateCodeChurn(codeFrequency);
+
+    // Calculate resolution rate
+    let resolutionRate = 'N/A';
+    if (issuesOpenCount !== null && issuesClosedCount !== null) {
+        const total = issuesOpenCount + issuesClosedCount;
+        if (total > 0) {
+            resolutionRate = `${Math.round((issuesClosedCount / total) * 100)}% resolvidas`;
+        }
+    }
+
+    // Format contributors for display
+    const formattedContributors = contributors.map(contributor => {
+        const totalContributions = contributors.reduce((sum, c) => sum + c.contributions, 0);
+        return {
+            ...contributor,
+            percentage: totalContributions > 0 ? ((contributor.contributions / totalContributions) * 100).toFixed(1) : 0
+        };
+    });
+
+    // Build final data structure matching component expectations
+    const formattedData = {
+        fullName: repoName,
+        url: `https://github.com/${repoName}`,
+        description: repoData.description,
+        ageText: age,
+        createdAt: repoData.created_at, // ISO string for calculations
+        createdAtFormatted: formattedDate, // Formatted string for display
+        stats: {
+            branches: branches.count,
+            prs: pulls || 0,
+            merges: mergedPRsCount,
+            prsPerBranch,
+            releases: releasesCount
+        },
+        metrics: {
+            stars: repoData.stargazers_count || 0,
+            forks: repoData.forks_count || 0,
+            openIssues: issuesOpenCount || 0,
+            closedIssues: issuesClosedCount || 0,
+            resolutionRate,
+            leadTime,
+            divergence
+        },
+        health,
+        maturity,
+        codeReview,
+        contributors: formattedContributors,
+        busFactor,
+        recentCommits,
+        recentPRs,
+        charts: {
+            techStack: formatLanguages(languages),
+            activity: formatCommitActivity(commitActivity)
+        },
+        codeChurn
+    };
+
+    return formattedData;
+}
+
+// Custom Hook for repository data fetching and analysis with TanStack Query
 export function useRepository() {
-    const [data, setData] = useState(null);
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
+    const [repoName, setRepoName] = useState(null);
 
-    const search = useCallback(async (repoName) => {
-        if (!repoName || !repoName.includes('/')) {
-            setError('Formato inválido. Use owner/repo');
-            return;
+    const { data, isLoading, error } = useQuery({
+        queryKey: ['repository', repoName],
+        queryFn: () => fetchRepositoryData(repoName),
+        enabled: !!repoName,
+        staleTime: 1000 * 60 * 5, // 5 minutes
+        retry: 1
+    });
+
+    const search = (name) => {
+        if (name && name.includes('/')) {
+            setRepoName(name);
+        } else {
+            setRepoName(null);
         }
+    };
 
-        const [owner, repo] = repoName.split('/');
-        setLoading(true);
-        setError(null);
-        setData(null);
-
-        try {
-            // First fetch repository data to get default branch
-            const repoData = await githubService.fetchRepository(owner, repo);
-            if (!repoData) {
-                throw new Error('Não foi possível buscar informações do repositório');
-            }
-
-            // Fetch all other data in parallel
-            const results = await Promise.allSettled([
-                githubService.fetchCommits(owner, repo),
-                githubService.fetchBranches(owner, repo),
-                githubService.fetchContributors(owner, repo),
-                githubService.fetchPullRequests(owner, repo),
-                githubService.fetchOpenIssuesCount(owner, repo),
-                githubService.fetchClosedIssuesCount(owner, repo),
-                githubService.fetchRecentPullRequests(owner, repo),
-                githubService.fetchLanguages(owner, repo),
-                githubService.fetchCommunityProfile(owner, repo),
-                githubService.fetchRepositoryTree(owner, repo, repoData.default_branch),
-                githubService.fetchReleasesCount(owner, repo),
-                githubService.fetchCommitActivity(owner, repo),
-                githubService.fetchPullRequestStats(owner, repo),
-                githubService.fetchCodeFrequency(owner, repo),
-                githubService.fetchMergedPRsCount(owner, repo)
-            ]);
-
-            // Extract results with fail-safe handling
-            const commits = results[0]?.status === 'fulfilled' ? results[0].value : [];
-            const branches = results[1]?.status === 'fulfilled' ? results[1].value : { count: 0, zombies: 0 };
-            const contributors = results[2]?.status === 'fulfilled' ? results[2].value : [];
-            const pulls = results[3]?.status === 'fulfilled' ? results[3].value : null;
-            const issuesOpenCount = results[4]?.status === 'fulfilled' ? results[4].value : null;
-            const issuesClosedCount = results[5]?.status === 'fulfilled' ? results[5].value : null;
-            const pullRequests = results[6]?.status === 'fulfilled' ? results[6].value : [];
-            const languages = results[7]?.status === 'fulfilled' ? results[7].value : {};
-            const communityProfile = results[8]?.status === 'fulfilled' ? results[8].value : null;
-            const repositoryTree = results[9]?.status === 'fulfilled' ? results[9].value : { tree: [] };
-            const releasesCount = results[10]?.status === 'fulfilled' ? results[10].value : 0;
-            const commitActivity = results[11]?.status === 'fulfilled' ? results[11].value : { all: [] };
-            const pullRequestsStats = results[12]?.status === 'fulfilled' ? results[12].value : [];
-            const codeFrequency = results[13]?.status === 'fulfilled' ? results[13].value : null;
-            const mergedPRsCount = results[14]?.status === 'fulfilled' ? results[14].value : 0;
-
-            // Get first 10 commits and PRs for activity logs
-            const recentCommits = commits.slice(0, 10);
-            const recentPRs = pullRequests.slice(0, 10);
-
-            // Calculate repository age
-            const createdAt = new Date(repoData.created_at);
-            const now = new Date();
-            const age = calculateAge(createdAt, now);
-            const formattedDate = `${String(createdAt.getDate()).padStart(2, '0')}/${String(createdAt.getMonth() + 1).padStart(2, '0')}/${createdAt.getFullYear()}`;
-
-            // Calculate PRs per branch
-            const totalBranches = branches.count;
-            const prsPerBranch = branches.count === 0 || pulls === null ? 'N/A' : (pulls / totalBranches).toFixed(1);
-
-            // Analyze health score
-            const health = analyzers.calculateHealthScore(communityProfile, repoData.description);
-
-            // Analyze maturity
-            const maturity = analyzers.analyzeEngineeringMaturity(repositoryTree.tree, pullRequests, branches.zombies);
-
-            // Analyze code review
-            const codeReview = analyzers.analyzeCodeReview(pullRequestsStats);
-
-            // Analyze process metrics
-            const leadTime = analyzers.calculateLeadTime(pullRequestsStats);
-            const divergence = analyzers.calculateDivergence(pullRequestsStats);
-
-            // Analyze bus factor
-            const busFactor = analyzers.calculateBusFactor(contributors);
-
-            // Analyze code churn
-            const codeChurn = analyzers.calculateCodeChurn(codeFrequency);
-
-            // Calculate resolution rate
-            let resolutionRate = 'N/A';
-            if (issuesOpenCount !== null && issuesClosedCount !== null) {
-                const total = issuesOpenCount + issuesClosedCount;
-                if (total > 0) {
-                    resolutionRate = `${Math.round((issuesClosedCount / total) * 100)}% resolvidas`;
-                }
-            }
-
-            // Format contributors for display
-            const formattedContributors = contributors.map(contributor => {
-                const totalContributions = contributors.reduce((sum, c) => sum + c.contributions, 0);
-                return {
-                    ...contributor,
-                    percentage: totalContributions > 0 ? ((contributor.contributions / totalContributions) * 100).toFixed(1) : 0
-                };
-            });
-
-            // Build final data structure matching component expectations
-            const formattedData = {
-                fullName: repoName,
-                url: `https://github.com/${repoName}`,
-                description: repoData.description,
-                ageText: age,
-                createdAt: repoData.created_at, // ISO string for calculations
-                createdAtFormatted: formattedDate, // Formatted string for display
-                stats: {
-                    branches: branches.count,
-                    prs: pulls || 0,
-                    merges: mergedPRsCount,
-                    prsPerBranch,
-                    releases: releasesCount
-                },
-                metrics: {
-                    stars: repoData.stargazers_count || 0,
-                    forks: repoData.forks_count || 0,
-                    openIssues: issuesOpenCount || 0,
-                    closedIssues: issuesClosedCount || 0,
-                    resolutionRate,
-                    leadTime,
-                    divergence
-                },
-                health,
-                maturity,
-                codeReview,
-                contributors: formattedContributors,
-                busFactor,
-                recentCommits,
-                recentPRs,
-                charts: {
-                    techStack: formatLanguages(languages),
-                    activity: formatCommitActivity(commitActivity)
-                },
-                codeChurn
-            };
-
-            setData(formattedData);
-        } catch (err) {
-            console.error('Error searching repository:', err);
-            setError(err.message || 'Erro ao buscar dados do repositório');
-        } finally {
-            setLoading(false);
-        }
-    }, []);
-
-    return { data, loading, error, search };
+    return {
+        data,
+        loading: isLoading,
+        error: error?.message || null,
+        search
+    };
 }
 
 // Helper function to calculate repository age

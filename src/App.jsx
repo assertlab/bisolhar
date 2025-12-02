@@ -11,6 +11,7 @@ import { SettingsModal } from './components/SettingsModal';
 import { TechStackChart } from './components/charts/TechStackChart';
 import { CommitActivityChart } from './components/charts/CommitActivityChart';
 import { WeekDaysChart } from './components/charts/WeekDaysChart';
+import { SkeletonDashboard } from './components/skeletons/SkeletonDashboard.jsx';
 import { useRepository } from './hooks/useRepository.js';
 
 function App() {
@@ -67,8 +68,12 @@ function App() {
           )}
         </div>
 
-        {/* Lógica de Renderização: Se tem dados, mostra o Dashboard completo */}
-        {repoData ? (
+        {/* Lógica de Renderização */}
+        {loading ? (
+          /* Skeleton Dashboard durante carregamento */
+          <SkeletonDashboard />
+        ) : repoData ? (
+          /* Dashboard completo quando tem dados */
           <div className="space-y-6 animate-fade-in-up">
 
             {/* 1. Card Principal */}
@@ -151,11 +156,9 @@ function App() {
           </div>
         ) : (
           /* Placeholder vazio quando não pesquisou nada */
-          !loading && (
-            <div className="border-2 border-dashed border-gray-200 rounded-xl h-64 flex items-center justify-center text-gray-400">
-              Os gráficos aparecerão aqui...
-            </div>
-          )
+          <div className="border-2 border-dashed border-gray-200 rounded-xl h-64 flex items-center justify-center text-gray-400">
+            Os gráficos aparecerão aqui...
+          </div>
         )}
 
       </main>
