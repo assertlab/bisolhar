@@ -1,16 +1,88 @@
-# React + Vite
+# 🦈 Bisolhador Dashboard v2.1.0
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Dashboard de Análise de Repositórios GitHub que transforma dados em insights poderosos para ensinamentos de Engenharia de Software. Ferramenta educacional desenvolvida pelo ASSERT Lab (UFPE) para apoiar professores e alunos na análise de práticas de desenvolvimento.
 
-Currently, two official plugins are available:
+## ✨ Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **🔍 Busca Inteligente**: Encontre e analise repositórios GitHub usando o formato `owner/repo`
+- **📊 Métricas Completas**: Stars, forks, issues, PRs, releases e code churn
+- **📈 Gráficos Avançados**: Fluxo de trabalho, padrões de commits e stack tecnológica
+- **⚡ Health Score**: Avaliação rigorosa baseada em 7 critérios comunitários
+- **👥 Bus Factor**: Análise de risco de dependência de contribuidores
+- **🔄 Dinâmica de Revisão**: Lead time e métricas de colaboração
+- **📄 Export PDF**: Relatórios completos em PDF com um clique
+- **🛡️ Fail-Safe**: Tratamento robusto de erros e rate limits
 
-## React Compiler
+## 🚀 Como Rodar
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Pré-requisitos
+- Node.js 18+
+- npm ou yarn
 
-## Expanding the ESLint configuration
+### Instalação e Execução
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```bash
+# Clone o repositório
+git clone https://github.com/assertlab/bisolhador.git
+cd bisolhador
+
+# Instale as dependências
+npm install
+
+# Execute em modo desenvolvimento
+npm run dev
+
+# Ou faça o build para produção
+npm run build
+```
+
+A aplicação estará disponível em `http://localhost:5173`
+
+## 🛠️ Tech Stack
+
+- **Frontend**: React 18 + Vite
+- **Styling**: Tailwind CSS
+- **Charts**: Chart.js + react-chartjs-2
+- **API**: GitHub REST API v3
+- **Build**: Vite
+- **Deploy**: GitHub Pages
+
+## 📋 Scripts Disponíveis
+
+- `npm run dev` - Inicia servidor de desenvolvimento
+- `npm run build` - Gera build de produção
+- `npm run preview` - Visualiza build local
+- `npm run lint` - Executa ESLint
+
+## 🎯 Uso Educacional
+
+O Bisolhador foi desenvolvido especificamente para:
+
+- **Análise de Projetos Open Source**: Avaliar saúde e maturidade de repositórios
+- **Ensino de Engenharia de Software**: Demonstrar boas práticas e identificar problemas
+- **Pesquisa**: Coletar métricas quantitativas sobre desenvolvimento colaborativo
+- **Mentoria Técnica**: Apoiar decisões sobre processos e governança
+
+## 🤝 Contribuição
+
+Contribuições são bem-vindas! Siga estes passos:
+
+1. Fork o projeto
+2. Crie uma branch para sua feature (`git checkout -b feature/AmazingFeature`)
+3. Commit suas mudanças (`git commit -m 'Add some AmazingFeature'`)
+4. Push para a branch (`git push origin feature/AmazingFeature`)
+5. Abra um Pull Request
+
+## 📄 Licença
+
+Este projeto está sob a licença MIT. Veja o arquivo `LICENSE` para mais detalhes.
+
+## 🙏 Agradecimentos
+
+- **ASSERT Lab** - Laboratório de Engenharia de Software do CIN/UFPE
+- **Comunidade Open Source** - Por inspirar e possibilitar esta ferramenta
+- **Educadores e Desenvolvedores** - Por usar e contribuir com feedback
+
+---
+
+**Powered by ASSERT Lab 🦈 | Orgulhosamente feito em Recife**
