@@ -4,5 +4,5 @@
 
 /* Define o fundo cinza claro padrão estilo SaaS */
 body {
-    @apply bg-gray-50 text-gray-900;
+    @apply bg-gray-50 text-gray-900 dark:bg-slate-900 dark:text-white;
 }

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { HelpModal } from './HelpModal.jsx';
 import { exportToPDF } from '../utils/pdfExporter.js';
+import ThemeToggle from './ThemeToggle.jsx';
 
 export function Header({ onSettingsClick }) {
   const [isHelpOpen, setIsHelpOpen] = useState(false);
@@ -28,12 +29,14 @@ export function Header({ onSettingsClick }) {
 
           {/* Toolbar (Botões) */}
           <div className="flex items-center gap-3">
-            
+
+            <ThemeToggle />
+
             {/* Botão Ajuda (?) */}
             <button
               type="button"
               onClick={() => setIsHelpOpen(true)}
-              className="bg-white hover:bg-gray-100 text-shark border border-gray-200 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm p-2.5 inline-flex items-center transition-colors"
+              className="bg-white dark:bg-slate-700 hover:bg-gray-100 dark:hover:bg-slate-600 text-shark dark:text-white border border-gray-200 dark:border-slate-600 focus:ring-4 focus:ring-gray-200 dark:focus:ring-slate-500 font-medium rounded-lg text-sm p-2.5 inline-flex items-center transition-colors"
               title="Como usar"
             >
               <svg className="w-5 h-5" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -45,7 +48,7 @@ export function Header({ onSettingsClick }) {
             <button
               type="button"
               onClick={onSettingsClick}
-              className="bg-white hover:bg-gray-100 text-shark border border-gray-200 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm p-2.5 inline-flex items-center transition-colors"
+              className="bg-white dark:bg-slate-700 hover:bg-gray-100 dark:hover:bg-slate-600 text-shark dark:text-white border border-gray-200 dark:border-slate-600 focus:ring-4 focus:ring-gray-200 dark:focus:ring-slate-500 font-medium rounded-lg text-sm p-2.5 inline-flex items-center transition-colors"
               title="Configurar Token GitHub"
             >
               <svg className="w-5 h-5" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -58,7 +61,7 @@ export function Header({ onSettingsClick }) {
             <button
               type="button"
               onClick={exportToPDF}
-              className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 flex items-center gap-2 transition-colors"
+              className="text-white bg-blue-700 dark:bg-blue-600 hover:bg-blue-800 dark:hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 flex items-center gap-2 transition-colors"
               title="Baixar relatório em PDF"
             >
               <svg className="w-4 h-4" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24">

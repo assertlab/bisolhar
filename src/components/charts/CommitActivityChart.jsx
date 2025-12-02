@@ -1,8 +1,11 @@
 import React from 'react';
 import { Line } from 'react-chartjs-2';
 import { Tooltip } from '../Tooltip.jsx';
+import useChartTheme from '../../hooks/useChartTheme.js';
 
 function CommitActivityChart({ data, createdAt }) {
+  const { textColor, gridColor } = useChartTheme();
+
   // Debug log
   console.log('CommitActivityChart renderizado');
   console.log('Data recebida:', data);
@@ -85,22 +88,22 @@ function CommitActivityChart({ data, createdAt }) {
 
   if (!hasData) {
     return (
-      <div className="bg-white border border-gray-200 rounded-lg shadow-sm p-6 flex flex-col h-80 hover:shadow-md transition-shadow relative overflow-visible hover:z-50">
-        <h3 className="text-sm font-medium text-gray-500 uppercase tracking-wider mb-4 flex items-center gap-2">
+      <div className="bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-lg shadow-sm p-6 flex flex-col h-80 hover:shadow-md transition-shadow relative overflow-visible hover:z-50">
+        <h3 className="text-sm font-medium text-gray-500 dark:text-slate-400 uppercase tracking-wider mb-4 flex items-center gap-2">
           Fluxo de Trabalho (Amostra: {weeksOld} Semanas)
           <Tooltip text="Frequência de commits ao longo do tempo">
-            <svg className="w-4 h-4 text-gray-300 hover:text-gray-500 cursor-help" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-4 h-4 text-gray-300 dark:text-slate-500 hover:text-gray-500 dark:hover:text-slate-400 cursor-help" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
             </svg>
           </Tooltip>
         </h3>
         <div className="flex-grow flex items-center justify-center">
-          <div className="text-center text-gray-500">
-            <svg className="w-12 h-12 mx-auto mb-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className="text-center text-gray-500 dark:text-slate-400">
+            <svg className="w-12 h-12 mx-auto mb-4 text-gray-300 dark:text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
             </svg>
             <p className="text-sm">Dados de fluxo indisponíveis no momento</p>
-            <p className="text-xs text-gray-400 mt-1">GitHub está calculando as estatísticas</p>
+            <p className="text-xs text-gray-400 dark:text-slate-500 mt-1">GitHub está calculando as estatísticas</p>
           </div>
         </div>
       </div>
@@ -117,17 +120,17 @@ function CommitActivityChart({ data, createdAt }) {
       tooltip: { mode: 'index', intersect: false }
     },
     scales: {
-      y: { beginAtZero: true, grid: { borderDash: [2, 4] } },
-      x: { grid: { display: false } }
+      y: { beginAtZero: true, grid: { borderDash: [2, 4], color: gridColor }, ticks: { color: textColor } },
+      x: { grid: { display: false }, ticks: { color: textColor } }
     }
   };
 
   return (
-    <div className="bg-white border border-gray-200 rounded-lg shadow-sm p-6 flex flex-col h-80 hover:shadow-md transition-shadow relative overflow-visible hover:z-50">
-      <h3 className="text-sm font-medium text-gray-500 uppercase tracking-wider mb-4 flex items-center gap-2">
+    <div className="bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-lg shadow-sm p-6 flex flex-col h-80 hover:shadow-md transition-shadow relative overflow-visible hover:z-50">
+      <h3 className="text-sm font-medium text-gray-500 dark:text-slate-400 uppercase tracking-wider mb-4 flex items-center gap-2">
         Fluxo de Trabalho (Amostra: {weeksOld} Semanas)
         <Tooltip text="Frequência de commits ao longo do tempo">
-          <svg className="w-4 h-4 text-gray-300 hover:text-gray-500 cursor-help" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="w-4 h-4 text-gray-300 dark:text-slate-500 hover:text-gray-500 dark:hover:text-slate-400 cursor-help" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
           </svg>
         </Tooltip>

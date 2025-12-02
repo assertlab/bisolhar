@@ -21,12 +21,12 @@ export function MaturityCard({ maturity, codeReview }) {
   };
 
   return (
-    <div className="bg-white border border-gray-200 rounded-lg shadow-sm p-6 hover:shadow-md transition-shadow relative overflow-hidden">
+    <div className="bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-lg shadow-sm p-6 hover:shadow-md transition-shadow relative overflow-hidden">
       <div className="flex items-center justify-between mb-4">
-        <h3 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
+        <h3 className="text-lg font-semibold text-gray-900 dark:text-white flex items-center gap-2">
           Maturidade de Engenharia
           <Tooltip text="Verifica presença de infraestrutura profissional: testes, CI/CD, linters e auditoria">
-            <svg className="w-4 h-4 text-gray-300 hover:text-gray-500 cursor-help" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-4 h-4 text-gray-300 dark:text-slate-500 hover:text-gray-500 dark:hover:text-slate-400 cursor-help" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
             </svg>
           </Tooltip>
@@ -47,7 +47,7 @@ export function MaturityCard({ maturity, codeReview }) {
 
       {/* Alerta de Code Review */}
       {codeReview.selfMergePercentage > 0 && (
-        <div className="mt-4 p-3 bg-yellow-50 border border-yellow-200 rounded-md">
+        <div className="mt-4 p-3 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-700 rounded-md">
           <div className="flex">
             <div className="flex-shrink-0">
               <svg className="h-5 w-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
@@ -55,10 +55,10 @@ export function MaturityCard({ maturity, codeReview }) {
               </svg>
             </div>
             <div className="ml-3">
-              <h3 className="text-sm font-medium text-yellow-800">
+              <h3 className="text-sm font-medium text-yellow-800 dark:text-yellow-200">
                 Atenção: Self-Merges Detectados
               </h3>
-              <div className="mt-2 text-sm text-yellow-700">
+              <div className="mt-2 text-sm text-yellow-700 dark:text-yellow-300">
                 <p>
                   {codeReview.selfMergePercentage}% dos PRs foram merged pelo próprio autor.
                   Considere implementar revisões obrigatórias para melhorar a qualidade.

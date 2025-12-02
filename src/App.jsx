@@ -19,9 +19,9 @@ const WeekDaysChart = lazy(() => import('./components/charts/WeekDaysChart'));
 // Skeleton component for chart loading
 function SkeletonChart() {
   return (
-    <div className="bg-white border border-gray-200 rounded-lg shadow-sm p-6 flex flex-col h-80 hover:shadow-md transition-shadow relative overflow-visible hover:z-50">
-      <div className="h-5 bg-gray-200 rounded animate-pulse mb-4 w-40"></div>
-      <div className="flex-grow bg-gray-100 rounded animate-pulse"></div>
+    <div className="bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-lg shadow-sm p-6 flex flex-col h-80 hover:shadow-md transition-shadow relative overflow-visible hover:z-50">
+      <div className="h-5 bg-gray-200 dark:bg-slate-600 rounded animate-pulse mb-4 w-40"></div>
+      <div className="flex-grow bg-gray-100 dark:bg-slate-700 rounded animate-pulse"></div>
     </div>
   );
 }
@@ -38,14 +38,14 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
+    <div className="min-h-screen bg-gray-50 dark:bg-slate-900 flex flex-col">
       <Header onSettingsClick={() => setIsSettingsOpen(true)} />
 
       {/* É AQUI! A tag <main> é o container principal da página */}
       <main className="flex-grow max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-10 space-y-8">
 
         <div className="flex flex-col items-center justify-center space-y-4">
-          <h2 className="text-3xl font-bold text-shark tracking-tight text-center">
+          <h2 className="text-3xl font-bold text-shark dark:text-white tracking-tight text-center">
             Analise repositórios como um Tech Lead
           </h2>
 
@@ -122,7 +122,7 @@ function App() {
             </div>
 
             {/* 3. Grid de Dinâmica de Revisão */}
-            <h3 className="text-lg font-semibold text-shark pt-4">Dinâmica de Revisão</h3>
+            <h3 className="text-lg font-semibold text-shark dark:text-white pt-4">Dinâmica de Revisão</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <StatCard
                 title="Lead Time"
@@ -140,7 +140,7 @@ function App() {
             </div>
 
             {/* 4. Governança e Maturidade */}
-            <h3 className="text-lg font-semibold text-shark pt-4">Governança e Maturidade</h3>
+            <h3 className="text-lg font-semibold text-shark dark:text-white pt-4">Governança e Maturidade</h3>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               <HealthScoreCard score={repoData.health.score} files={repoData.health.files} />
               <MaturityCard maturity={repoData.maturity} codeReview={repoData.codeReview} />
@@ -174,17 +174,17 @@ function App() {
           </div>
         ) : (
           /* Placeholder vazio quando não pesquisou nada */
-          <div className="border-2 border-dashed border-gray-200 rounded-xl h-64 flex items-center justify-center text-gray-400">
+          <div className="border-2 border-dashed border-gray-200 dark:border-slate-700 rounded-xl h-64 flex items-center justify-center text-gray-400 dark:text-slate-500">
             Os gráficos aparecerão aqui...
           </div>
         )}
 
       </main>
 
-      <footer className="bg-white border-t border-gray-200 py-6 mt-auto">
-        <div className="text-center text-sm text-gray-500">
+      <footer className="bg-white dark:bg-slate-800 border-t border-gray-200 dark:border-slate-700 py-6 mt-auto">
+        <div className="text-center text-sm text-gray-500 dark:text-slate-400">
           <p>© 2025 Vinicius Cardoso Garcia. Licenciado sob MIT.</p>
-          <p className="mt-1 font-medium text-shark">
+          <p className="mt-1 font-medium text-shark dark:text-white">
             Powered by ASSERT Lab. Orgulhosamente feito em Recife 🦈
           </p>
         </div>

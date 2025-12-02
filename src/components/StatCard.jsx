@@ -4,18 +4,18 @@ import { Tooltip } from './Tooltip.jsx';
 
 export function StatCard({ title, value, subValue, icon, type = 'default', tooltipText }) {
   // Cores dinâmicas baseadas no tipo de alerta (para o futuro)
-  const valueColor = type === 'alert' ? 'text-coral' : 'text-gray-900';
+  const valueColor = type === 'alert' ? 'text-coral' : 'text-gray-900 dark:text-white';
 
   return (
-    <div className="bg-white border border-gray-200 rounded-lg shadow-sm p-6 flex flex-col justify-between hover:shadow-md transition-shadow relative overflow-hidden">
+    <div className="bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-lg shadow-sm p-6 flex flex-col justify-between hover:shadow-md transition-shadow relative overflow-hidden">
 
       {/* Cabeçalho do Card */}
       <div className="flex items-center justify-between mb-4">
-        <h3 className="text-sm font-medium text-gray-500 uppercase tracking-wider flex items-center gap-2">
+        <h3 className="text-sm font-medium text-gray-500 dark:text-slate-400 uppercase tracking-wider flex items-center gap-2">
           {title}
           {tooltipText && (
             <Tooltip text={tooltipText}>
-              <svg className="w-4 h-4 text-gray-300 hover:text-gray-500 cursor-help" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-4 h-4 text-gray-300 dark:text-slate-500 hover:text-gray-500 dark:hover:text-slate-400 cursor-help" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
               </svg>
             </Tooltip>
@@ -37,7 +37,7 @@ export function StatCard({ title, value, subValue, icon, type = 'default', toolt
 
       {/* Valor Secundário (Ex: Taxa de Resolução) */}
       {subValue && (
-        <div className="mt-2 text-xs font-medium text-gray-500 bg-gray-100 inline-block px-2 py-1 rounded self-start">
+        <div className="mt-2 text-xs font-medium text-gray-500 dark:text-slate-400 bg-gray-100 dark:bg-slate-700 inline-block px-2 py-1 rounded self-start">
           {subValue}
         </div>
       )}
