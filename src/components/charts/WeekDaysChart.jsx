@@ -1,13 +1,14 @@
-import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Bar } from 'react-chartjs-2';
 import { Tooltip } from '../Tooltip.jsx';
 import useChartTheme from '../../hooks/useChartTheme.js';
 
 function WeekDaysChart({ commits }) {
+  const { t } = useTranslation();
   const { textColor, gridColor } = useChartTheme();
 
   // Count commits by day of week
-  const dayNames = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
+  const dayNames = t('charts.weekdays.days', { returnObjects: true });
   const dayCounts = [0, 0, 0, 0, 0, 0, 0];
 
   commits.forEach(commit => {
@@ -43,7 +44,7 @@ function WeekDaysChart({ commits }) {
       tooltip: {
         callbacks: {
           label: function(context) {
-            return `${context.label}: ${context.raw} commits`;
+            return t('charts.weekdays.tooltipLabel', { day: context.label, count: context.raw });
           }
         }
       }
@@ -64,8 +65,8 @@ function WeekDaysChart({ commits }) {
   return (
     <div className="bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-lg shadow-sm p-6 flex flex-col h-80 hover:shadow-md transition-shadow relative overflow-visible hover:z-50">
       <h3 className="text-sm font-medium text-gray-500 dark:text-slate-400 uppercase tracking-wider mb-4 flex items-center gap-2">
-        Commits por Dia da Semana (Amostra: {commits.length} commits)
-        <Tooltip text="Distribuição de commits ao longo dos dias da semana. Ajuda a identificar padrões de trabalho da equipe.">
+        {t('charts.weekdays.title', { count: commits.length })}
+        <Tooltip text={t('charts.weekdays.tooltip')}>
           <svg className="w-4 h-4 text-gray-300 dark:text-slate-500 hover:text-gray-500 dark:hover:text-slate-400 cursor-help" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
           </svg>

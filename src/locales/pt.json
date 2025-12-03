@@ -1,0 +1,147 @@
+{
+  "header": {
+    "title": "Bisolhador",
+    "version": "v2.2.0",
+    "helpTitle": "Como usar",
+    "settingsTitle": "Configurar Token GitHub",
+    "downloadTitle": "Baixar relatório em PDF",
+    "downloadButton": "Baixar Relatório"
+  },
+  "search": {
+    "label": "Buscar repositório",
+    "placeholder": "Ex: facebook/react ou assertlab/bisolhador",
+    "button": "Buscar",
+    "loading": "Bisolhando..."
+  },
+  "repo": {
+    "noDescription": "Sem descrição disponível.",
+    "projectAge": "Idade do Projeto",
+    "since": "(Desde {createdAt})",
+    "extraStats": "Estatísticas Extras",
+    "totalBranches": "Total de Branches:",
+    "totalPRs": "Total de PRs:",
+    "totalMerges": "Total de Merges:",
+    "prsPerBranch": "PRs por Branch:",
+    "totalReleases": "Total de Releases:"
+  },
+  "app": {
+    "subtitle": "Analise repositórios como um Tech Lead",
+    "errorTitle": "Erro na busca",
+    "placeholderText": "Os gráficos aparecerão aqui...",
+    "reviewDynamics": "Dinâmica de Revisão",
+    "governanceMaturity": "Governança e Maturidade",
+    "footerCopyright": "© 2025 Vinicius Cardoso Garcia. Licenciado sob MIT.",
+    "footerPowered": "Powered by ASSERT Lab. Orgulhosamente feito em Recife 🦈"
+  },
+  "stats": {
+    "stars": "Stars",
+    "forks": "Forks",
+    "openIssues": "Open Issues",
+    "closedIssues": "Closed Issues",
+    "codeChurn": "Code Churn",
+    "leadTime": "Lead Time",
+    "divergence": "Divergência",
+    "starsTooltip": "Número total de estrelas (favoritos) que o repositório recebeu no GitHub.",
+    "forksTooltip": "Número de cópias (forks) do repositório criadas por outros usuários.",
+    "openIssuesTooltip": "Número de issues (problemas ou solicitações) que ainda estão abertas no repositório.",
+    "closedIssuesTooltip": "Total de issues já resolvidas, com taxa de resolução mostrando eficiência.",
+    "codeChurnTooltip": "Razão entre código novo adicionado e código removido/refatorado. Indica qualidade das mudanças.",
+    "leadTimeTooltip": "Tempo médio entre a criação de um Pull Request e sua aprovação/merge. Indica velocidade do processo de revisão.",
+    "divergenceTooltip": "Número médio de comentários e discussões por Pull Request. Indica nível de colaboração e debate técnico."
+  },
+  "language": {
+    "pt": "PT",
+    "en": "EN"
+  },
+  "health": {
+    "title": "Health Score",
+    "tooltip": "Mede a saúde comunitária baseada em 7 indicadores de governança open-source",
+    "communityHealth": "Saúde Comunitária",
+    "files": {
+      "readme": "README",
+      "license": "License",
+      "contributing": "Contributing",
+      "description": "Description",
+      "codeOfConduct": "Code of Conduct",
+      "issueTemplate": "Issue Template",
+      "prTemplate": "PR Template"
+    }
+  },
+  "maturity": {
+    "title": "Maturidade de Engenharia",
+    "tooltip": "Verifica presença de infraestrutura profissional: testes, CI/CD, linters e auditoria",
+    "badges": {
+      "tests": "🧪 Testes Detectados",
+      "ciCd": "⚡ CI/CD",
+      "docker": "🐳 Docker",
+      "codeReview": "🛡️ Code Review ({{percentage}}%)",
+      "noZombies": "✅ Nenhuma Branch Zumbi",
+      "zombies": "🧟 {{count}} Branches Zumbis detectadas"
+    },
+    "alert": {
+      "title": "Atenção: Self-Merges Detectados",
+      "message": "{{percentage}}% dos PRs foram merged pelo próprio autor. Considere implementar revisões obrigatórias para melhorar a qualidade."
+    }
+  },
+  "contributors": {
+    "title": "Contribuições (Bus Factor)",
+    "tooltip": "Avalia o risco de dependência de poucos contribuidores. Bus Factor alto indica vulnerabilidade.",
+    "headers": {
+      "contributor": "Contribuidor",
+      "commits": "Commits",
+      "workPercentage": "% do Trabalho"
+    },
+    "busFactor": {
+      "none": {
+        "title": "Nenhum Contribuidor",
+        "message": "Este repositório não possui contribuidores analisáveis."
+      },
+      "healthy": {
+        "title": "Bus Factor Baixo",
+        "message": "Time balanceado. Nenhum usuário concentra mais de 40% dos commits."
+      },
+      "warning": {
+        "title": "Bus Factor Moderado",
+        "message": "O usuário <strong>{{contributor}}</strong> concentra <strong>{{percentage}}%</strong> do trabalho. Considere diversificar as contribuições."
+      },
+      "critical": {
+        "title": "Bus Factor Crítico",
+        "message": "O usuário <strong>{{contributor}}</strong> concentra <strong>{{percentage}}%</strong> do trabalho. Alto risco de dependência."
+      }
+    }
+  },
+  "activity": {
+    "title": "Atividades Recentes",
+    "tooltip": "Últimos commits e pull requests do repositório",
+    "sections": {
+      "commits": "Últimos Commits",
+      "pullRequests": "Últimos Pull Requests"
+    },
+    "prStates": {
+      "open": "Open",
+      "closed": "Closed",
+      "merged": "Merged"
+    },
+    "commitBy": "por {{author}} • {{date}}"
+  },
+  "charts": {
+    "commitActivity": {
+      "title": "Fluxo de Trabalho (Amostra: {{weeks}} Semanas)",
+      "tooltip": "Frequência de commits ao longo do tempo",
+      "noData": {
+        "title": "Dados de fluxo indisponíveis no momento",
+        "subtitle": "GitHub está calculando as estatísticas"
+      }
+    },
+    "techStack": {
+      "title": "Stack Tecnológica",
+      "tooltip": "Linguagens de programação utilizadas no repositório"
+    },
+    "weekdays": {
+      "title": "Commits por Dia da Semana (Amostra: {{count}} commits)",
+      "tooltip": "Distribuição de commits ao longo dos dias da semana. Ajuda a identificar padrões de trabalho da equipe.",
+      "days": ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"],
+      "tooltipLabel": "{{day}}: {{count}} commits"
+    }
+  }
+}

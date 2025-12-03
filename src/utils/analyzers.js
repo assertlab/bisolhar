@@ -211,9 +211,7 @@ export const analyzers = {
     calculateBusFactor(contributors) {
         if (!contributors || contributors.length === 0) {
             return {
-                level: 'none',
-                title: 'Nenhum Contribuidor',
-                message: 'Este repositório não possui contribuidores analisáveis.'
+                level: 'none'
             };
         }
 
@@ -224,22 +222,20 @@ export const analyzers = {
         const topContributor = sortedContributors[0];
         const topPercentage = (topContributor.contributions / totalContributions) * 100;
 
-        let level, title, message;
+        let level;
         if (topPercentage > 60) {
-            level = 'high';
-            title = 'Bus Factor Crítico';
-            message = `O usuário ${topContributor.login} concentra ${topPercentage.toFixed(1)}% do trabalho. Alto risco de dependência.`;
+            level = 'critical';
         } else if (topPercentage > 40) {
-            level = 'medium';
-            title = 'Bus Factor Moderado';
-            message = `O usuário ${topContributor.login} concentra ${topPercentage.toFixed(1)}% do trabalho. Considere diversificar as contribuições.`;
+            level = 'warning';
         } else {
-            level = 'low';
-            title = 'Bus Factor Baixo';
-            message = 'Time balanceado. Nenhum usuário concentra mais de 40% dos commits.';
+            level = 'healthy';
         }
 
-        return { level, title, message };
+        return {
+            level,
+            topContributor: topContributor.login,
+            percentage: Math.round(topPercentage * 10) / 10
+        };
     },
 
     // Code Churn Analysis

@@ -6,12 +6,6 @@ Este documento rastreia a evolução do Bisolhador, desde sua concepção em Van
 
 ## 🔮 O Futuro (Próximas Versões)
 
-### 🎨 v2.3.0 - Experiência Global (Planejado)
-*Foco: Acessibilidade, Internacionalização e Identidade.*
-- [ ] **Dark Mode:** Implementar alternância de tema (Claro/Escuro) utilizando classes `dark:` do Tailwind e persistência no localStorage.
-- [ ] **Internacionalização (i18n):** Suporte a múltiplos idiomas (PT-BR / EN-US) utilizando `react-i18next`.
-- [ ] **Design System Refinement:** Padronização final de tokens de espaçamento e tipografia.
-
 ### 🔭 v3.0.0 - A Plataforma (Longo Prazo)
 - [ ] **Comparador de Repositórios:** Visualização "Split View" para comparar dois projetos lado a lado.
 - [ ] **Gamificação:** Badges de conquista para alunos (ex: "Clean Coder", "Bug Hunter").
@@ -20,6 +14,12 @@ Este documento rastreia a evolução do Bisolhador, desde sua concepção em Van
 ---
 
 ## ✅ O Presente (React Era)
+
+### v2.3.0 - Experiência Global (Dezembro 2025)
+*Foco: Acessibilidade, Internacionalização e Identidade.*
+- [x] **Dark Mode:** Implementar alternância de tema (Claro/Escuro) utilizando classes `dark:` do Tailwind e persistência no localStorage.
+- [x] **Internacionalização (i18n):** Suporte a múltiplos idiomas (PT-BR / EN-US) utilizando `react-i18next`.
+- [x] **Design System Refinement:** Padronização final de tokens de espaçamento e tipografia.
 
 ### v2.2.0 - Performance & UX (Dezembro 2025)
 *Foco: Resolver a lentidão percebida e modernizar a camada de dados.*

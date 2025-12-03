@@ -1,7 +1,8 @@
-import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Tooltip } from './Tooltip.jsx';
 
 export function MaturityCard({ maturity, codeReview }) {
+  const { t } = useTranslation();
   // Função auxiliar para renderizar badge
   const renderBadge = (text, detected, customColor) => {
     let bgColor = 'bg-gray-500';
@@ -24,8 +25,8 @@ export function MaturityCard({ maturity, codeReview }) {
     <div className="bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-lg shadow-sm p-6 hover:shadow-md transition-shadow relative overflow-hidden">
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-lg font-semibold text-gray-900 dark:text-white flex items-center gap-2">
-          Maturidade de Engenharia
-          <Tooltip text="Verifica presença de infraestrutura profissional: testes, CI/CD, linters e auditoria">
+          {t('maturity.title')}
+          <Tooltip text={t('maturity.tooltip')}>
             <svg className="w-4 h-4 text-gray-300 dark:text-slate-500 hover:text-gray-500 dark:hover:text-slate-400 cursor-help" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
             </svg>
@@ -35,13 +36,13 @@ export function MaturityCard({ maturity, codeReview }) {
 
       {/* Badges de Tecnologias */}
       <div className="flex flex-wrap gap-2 mb-4">
-        {renderBadge('🧪 Testes Detectados', maturity.testsDetected)}
-        {renderBadge('⚡ CI/CD', maturity.ciCdDetected)}
-        {renderBadge('🐳 Docker', maturity.dockerDetected)}
-        {renderBadge('🛡️ Code Review (' + codeReview.selfMergePercentage + '%)', true, codeReview.color)}
+        {renderBadge(t('maturity.badges.tests'), maturity.testsDetected)}
+        {renderBadge(t('maturity.badges.ciCd'), maturity.ciCdDetected)}
+        {renderBadge(t('maturity.badges.docker'), maturity.dockerDetected)}
+        {renderBadge(t('maturity.badges.codeReview', { percentage: codeReview.selfMergePercentage }), true, codeReview.color)}
         {maturity.zombies === 0
-          ? renderBadge('✅ Nenhuma Branch Zumbi', true, 'green')
-          : renderBadge('🧟 ' + maturity.zombies + ' Branches Zumbis detectadas', true, 'red')
+          ? renderBadge(t('maturity.badges.noZombies'), true, 'green')
+          : renderBadge(t('maturity.badges.zombies', { count: maturity.zombies }), true, 'red')
         }
       </div>
 
@@ -56,12 +57,11 @@ export function MaturityCard({ maturity, codeReview }) {
             </div>
             <div className="ml-3">
               <h3 className="text-sm font-medium text-yellow-800 dark:text-yellow-200">
-                Atenção: Self-Merges Detectados
+                {t('maturity.alert.title')}
               </h3>
               <div className="mt-2 text-sm text-yellow-700 dark:text-yellow-300">
                 <p>
-                  {codeReview.selfMergePercentage}% dos PRs foram merged pelo próprio autor.
-                  Considere implementar revisões obrigatórias para melhorar a qualidade.
+                  {t('maturity.alert.message', { percentage: codeReview.selfMergePercentage })}
                 </p>
               </div>
             </div>

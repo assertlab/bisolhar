@@ -1,27 +1,36 @@
-import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Tooltip } from './Tooltip.jsx';
 
 export function ContributorsTable({ contributors, busFactor }) {
+  const { t } = useTranslation();
+
   // Determinar cor do alerta baseado no level
   let alertColor = 'bg-gray-100 dark:bg-slate-700 border-gray-200 dark:border-slate-600';
   let textColor = 'text-gray-800 dark:text-slate-200';
-  if (busFactor.level === 'high') {
+  if (busFactor.level === 'critical') {
     alertColor = 'bg-red-50 dark:bg-red-900/20 border-red-200 dark:border-red-700';
     textColor = 'text-red-800 dark:text-red-200';
-  } else if (busFactor.level === 'medium') {
+  } else if (busFactor.level === 'warning') {
     alertColor = 'bg-yellow-50 dark:bg-yellow-900/20 border-yellow-200 dark:border-yellow-700';
     textColor = 'text-yellow-800 dark:text-yellow-200';
-  } else {
+  } else if (busFactor.level === 'healthy') {
     alertColor = 'bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-700';
     textColor = 'text-green-800 dark:text-green-200';
   }
+
+  // Build the message with interpolation - get title and message separately
+  const busFactorTitle = t(`contributors.busFactor.${busFactor.level}.title`);
+  const busFactorMessage = t(`contributors.busFactor.${busFactor.level}.message`, {
+    contributor: busFactor.topContributor,
+    percentage: busFactor.percentage
+  });
 
   return (
     <div className="bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-lg shadow-sm p-6 hover:shadow-md transition-shadow relative overflow-hidden">
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-lg font-semibold text-gray-900 dark:text-white flex items-center gap-2">
-          Contribuições (Bus Factor)
-          <Tooltip text="Avalia o risco de dependência de poucos contribuidores. Bus Factor alto indica vulnerabilidade.">
+          {t('contributors.title')}
+          <Tooltip text={t('contributors.tooltip')}>
             <svg className="w-4 h-4 text-gray-300 dark:text-slate-500 hover:text-gray-500 dark:hover:text-slate-400 cursor-help" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
             </svg>
@@ -39,10 +48,10 @@ export function ContributorsTable({ contributors, busFactor }) {
           </div>
           <div className="ml-3">
             <h3 className={`text-sm font-medium ${textColor}`}>
-              {busFactor.title}
+              {busFactorTitle}
             </h3>
             <div className={`mt-2 text-sm ${textColor}`}>
-              <p>{busFactor.message}</p>
+              <p dangerouslySetInnerHTML={{ __html: busFactorMessage }} />
             </div>
           </div>
         </div>
@@ -54,13 +63,13 @@ export function ContributorsTable({ contributors, busFactor }) {
           <thead className="bg-gray-50 dark:bg-slate-700">
             <tr>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-slate-400 uppercase tracking-wider">
-                Contribuidor
+                {t('contributors.headers.contributor')}
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-slate-400 uppercase tracking-wider">
-                Commits
+                {t('contributors.headers.commits')}
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-slate-400 uppercase tracking-wider">
-                % do Trabalho
+                {t('contributors.headers.workPercentage')}
               </th>
             </tr>
           </thead>

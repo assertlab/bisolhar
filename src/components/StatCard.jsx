@@ -1,8 +1,9 @@
-import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { formatters } from '../utils/formatters.js';
 import { Tooltip } from './Tooltip.jsx';
 
 export function StatCard({ title, value, subValue, icon, type = 'default', tooltipText }) {
+  const { i18n } = useTranslation();
   // Cores dinâmicas baseadas no tipo de alerta (para o futuro)
   const valueColor = type === 'alert' ? 'text-coral' : 'text-gray-900 dark:text-white';
 
@@ -32,7 +33,7 @@ export function StatCard({ title, value, subValue, icon, type = 'default', toolt
 
       {/* Valor Principal */}
       <div className={`text-3xl font-bold ${valueColor} tracking-tight`}>
-        {formatters.formatNumber(value)}
+        {formatters.formatNumber(value, i18n.language === 'pt' ? 'pt-BR' : 'en-US')}
       </div>
 
       {/* Valor Secundário (Ex: Taxa de Resolução) */}

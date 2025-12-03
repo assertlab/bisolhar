@@ -1,7 +1,8 @@
-import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Tooltip } from './Tooltip.jsx';
 
 export function HealthScoreCard({ score, files }) {
+  const { t } = useTranslation();
   // Determinar cor baseada no score
   let scoreColor = 'text-gray-900 dark:text-white';
   let bgColor = 'bg-gray-100 dark:bg-slate-700';
@@ -20,8 +21,8 @@ export function HealthScoreCard({ score, files }) {
     <div className="bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-lg shadow-sm p-6 hover:shadow-md transition-shadow relative overflow-hidden">
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-lg font-semibold text-gray-900 dark:text-white flex items-center gap-2">
-          Health Score
-          <Tooltip text="Mede a saúde comunitária baseada em 7 indicadores de governança open-source">
+          {t('health.title')}
+          <Tooltip text={t('health.tooltip')}>
             <svg className="w-4 h-4 text-gray-300 dark:text-slate-500 hover:text-gray-500 dark:hover:text-slate-400 cursor-help" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
             </svg>
@@ -34,7 +35,7 @@ export function HealthScoreCard({ score, files }) {
         <div className={`text-5xl font-bold ${scoreColor}`}>
           {score}%
         </div>
-        <div className="text-sm text-gray-600 dark:text-slate-400 mt-1">Saúde Comunitária</div>
+        <div className="text-sm text-gray-600 dark:text-slate-400 mt-1">{t('health.communityHealth')}</div>
       </div>
 
       {/* Checklist Grid */}
@@ -42,43 +43,43 @@ export function HealthScoreCard({ score, files }) {
         <div className="flex items-center gap-2 text-sm">
           {files.hasReadme ? '✅' : '❌'}
           <span className={files.hasReadme ? 'text-green-600' : 'text-red-600'}>
-            README
+            {t('health.files.readme')}
           </span>
         </div>
         <div className="flex items-center gap-2 text-sm">
           {files.hasLicense ? '✅' : '❌'}
           <span className={files.hasLicense ? 'text-green-600' : 'text-red-600'}>
-            License
+            {t('health.files.license')}
           </span>
         </div>
         <div className="flex items-center gap-2 text-sm">
           {files.hasContributing ? '✅' : '❌'}
           <span className={files.hasContributing ? 'text-green-600' : 'text-red-600'}>
-            Contributing
+            {t('health.files.contributing')}
           </span>
         </div>
         <div className="flex items-center gap-2 text-sm">
           {files.hasDescription ? '✅' : '❌'}
           <span className={files.hasDescription ? 'text-green-600' : 'text-red-600'}>
-            Description
+            {t('health.files.description')}
           </span>
         </div>
         <div className="flex items-center gap-2 text-sm">
           {files.hasCodeOfConduct ? '✅' : '❌'}
           <span className={files.hasCodeOfConduct ? 'text-green-600' : 'text-red-600'}>
-            Code of Conduct
+            {t('health.files.codeOfConduct')}
           </span>
         </div>
         <div className="flex items-center gap-2 text-sm">
           {files.hasIssueTemplate ? '✅' : '❌'}
           <span className={files.hasIssueTemplate ? 'text-green-600' : 'text-red-600'}>
-            Issue Template
+            {t('health.files.issueTemplate')}
           </span>
         </div>
         <div className="flex items-center gap-2 text-sm col-span-2">
           {files.hasPullRequestTemplate ? '✅' : '❌'}
           <span className={files.hasPullRequestTemplate ? 'text-green-600' : 'text-red-600'}>
-            PR Template
+            {t('health.files.prTemplate')}
           </span>
         </div>
       </div>

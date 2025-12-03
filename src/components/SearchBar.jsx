@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export function SearchBar({ onSearch, loading }) {
+  const { t } = useTranslation();
   const [inputValue, setInputValue] = useState('');
 
   const handleSubmit = (e) => {
@@ -13,10 +15,10 @@ export function SearchBar({ onSearch, loading }) {
   return (
     <form onSubmit={handleSubmit} className="w-full max-w-3xl mx-auto">
       <label htmlFor="search" className="mb-2 text-sm font-medium text-gray-900 dark:text-white sr-only">
-        Buscar repositório
+        {t('search.label')}
       </label>
       <div className="relative">
-        
+
         {/* Ícone da Lupa */}
         <div className="absolute inset-y-0 start-0 flex items-center ps-4 pointer-events-none">
           <svg className="w-5 h-5 text-gray-400" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -29,7 +31,7 @@ export function SearchBar({ onSearch, loading }) {
           type="search"
           id="search"
           className="block w-full p-4 ps-12 text-sm text-gray-900 dark:text-white border border-gray-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-800 focus:ring-ocean focus:border-ocean outline-none shadow-sm transition-shadow placeholder-gray-400 dark:placeholder-slate-400"
-          placeholder="Ex: facebook/react ou assertlab/bisolhador"
+          placeholder={t('search.placeholder')}
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
           required
@@ -51,7 +53,7 @@ export function SearchBar({ onSearch, loading }) {
               </svg>
             </>
           ) : (
-            'Buscar'
+            t('search.button')
           )}
         </button>
       </div>

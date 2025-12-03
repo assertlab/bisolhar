@@ -1,8 +1,8 @@
 // Formatters - Utility functions for data formatting
 
 export const formatters = {
-    // Format large numbers with Brazilian locale
-    formatNumber(value) {
+    // Format large numbers with dynamic locale
+    formatNumber(value, locale = 'pt-BR') {
         if (value === null || value === undefined || value === 'N/A') {
             return value;
         }
@@ -13,6 +13,6 @@ export const formatters = {
             return value;
         }
 
-        return new Intl.NumberFormat('pt-BR').format(num);
+        return new Intl.NumberFormat(locale).format(num);
     }
 };

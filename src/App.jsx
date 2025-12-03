@@ -1,4 +1,5 @@
 import { useState, lazy, Suspense } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Header } from './components/Header';
 import { SearchBar } from './components/SearchBar';
 import { RepoInfoCard } from './components/RepoInfoCard';
@@ -27,6 +28,7 @@ function SkeletonChart() {
 }
 
 function App() {
+  const { t } = useTranslation();
   const { data: repoData, loading, error, search } = useRepository();
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [dismissedError, setDismissedError] = useState(false);
@@ -46,7 +48,7 @@ function App() {
 
         <div className="flex flex-col items-center justify-center space-y-4">
           <h2 className="text-3xl font-bold text-shark dark:text-white tracking-tight text-center">
-            Analise repositórios como um Tech Lead
+            {t('app.subtitle')}
           </h2>
 
           <div className="w-full pt-4">
@@ -62,7 +64,7 @@ function App() {
                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
                   </svg>
                   <div>
-                    <h3 className="text-sm font-medium">Erro na busca</h3>
+                    <h3 className="text-sm font-medium">{t('app.errorTitle')}</h3>
                     <p className="text-sm mt-1">{error}</p>
                   </div>
                 </div>
@@ -94,53 +96,53 @@ function App() {
             {/* 2. Grid de Métricas de Volume */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
               <StatCard
-                title="Stars"
+                title={t('stats.stars')}
                 value={repoData.metrics.stars}
-                tooltipText="Número total de estrelas (favoritos) que o repositório recebeu no GitHub."
+                tooltipText={t('stats.starsTooltip')}
               />
               <StatCard
-                title="Forks"
+                title={t('stats.forks')}
                 value={repoData.metrics.forks}
-                tooltipText="Número de cópias (forks) do repositório criadas por outros usuários."
+                tooltipText={t('stats.forksTooltip')}
               />
               <StatCard
-                title="Open Issues"
+                title={t('stats.openIssues')}
                 value={repoData.metrics.openIssues}
-                tooltipText="Número de issues (problemas ou solicitações) que ainda estão abertas no repositório."
+                tooltipText={t('stats.openIssuesTooltip')}
               />
               <StatCard
-                title="Closed Issues"
+                title={t('stats.closedIssues')}
                 value={repoData.metrics.closedIssues}
                 subValue={repoData.metrics.resolutionRate}
-                tooltipText="Total de issues já resolvidas, com taxa de resolução mostrando eficiência."
+                tooltipText={t('stats.closedIssuesTooltip')}
               />
               <StatCard
-                title="Code Churn"
+                title={t('stats.codeChurn')}
                 value={repoData.codeChurn?.ratio || 'N/A'}
-                tooltipText="Razão entre código novo adicionado e código removido/refatorado. Indica qualidade das mudanças."
+                tooltipText={t('stats.codeChurnTooltip')}
               />
             </div>
 
             {/* 3. Grid de Dinâmica de Revisão */}
-            <h3 className="text-lg font-semibold text-shark dark:text-white pt-4">Dinâmica de Revisão</h3>
+            <h3 className="text-lg font-semibold text-shark dark:text-white pt-4">{t('app.reviewDynamics')}</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <StatCard
-                title="Lead Time"
+                title={t('stats.leadTime')}
                 value={repoData.metrics.leadTime}
                 icon={<svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>}
-                tooltipText="Tempo médio entre a criação de um Pull Request e sua aprovação/merge. Indica velocidade do processo de revisão."
+                tooltipText={t('stats.leadTimeTooltip')}
               />
               <StatCard
-                title="Divergência"
+                title={t('stats.divergence')}
                 value={repoData.metrics.divergence.avg}
                 subValue={repoData.metrics.divergence.category}
                 icon={<svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"></path></svg>}
-                tooltipText="Número médio de comentários e discussões por Pull Request. Indica nível de colaboração e debate técnico."
+                tooltipText={t('stats.divergenceTooltip')}
               />
             </div>
 
             {/* 4. Governança e Maturidade */}
-            <h3 className="text-lg font-semibold text-shark dark:text-white pt-4">Governança e Maturidade</h3>
+            <h3 className="text-lg font-semibold text-shark dark:text-white pt-4">{t('app.governanceMaturity')}</h3>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               <HealthScoreCard score={repoData.health.score} files={repoData.health.files} />
               <MaturityCard maturity={repoData.maturity} codeReview={repoData.codeReview} />
@@ -175,7 +177,7 @@ function App() {
         ) : (
           /* Placeholder vazio quando não pesquisou nada */
           <div className="border-2 border-dashed border-gray-200 dark:border-slate-700 rounded-xl h-64 flex items-center justify-center text-gray-400 dark:text-slate-500">
-            Os gráficos aparecerão aqui...
+            {t('app.placeholderText')}
           </div>
         )}
 
@@ -183,9 +185,9 @@ function App() {
 
       <footer className="bg-white dark:bg-slate-800 border-t border-gray-200 dark:border-slate-700 py-6 mt-auto">
         <div className="text-center text-sm text-gray-500 dark:text-slate-400">
-          <p>© 2025 Vinicius Cardoso Garcia. Licenciado sob MIT.</p>
+          <p>{t('app.footerCopyright')}</p>
           <p className="mt-1 font-medium text-shark dark:text-white">
-            Powered by ASSERT Lab. Orgulhosamente feito em Recife 🦈
+            {t('app.footerPowered')}
           </p>
         </div>
       </footer>
