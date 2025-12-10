@@ -32,6 +32,8 @@ O **Bisolhador** é um Dashboard de Análise de Repositórios GitHub de código 
 - **Data Mining**: Botão de exportação JSON com metadados de proveniência (versão/data) para auditoria e análise externa.
 - **Inteligência Coletiva**: Leaderboard público alimentado por logs imutáveis no Supabase.
 - **Analytics Híbrido**: Supabase + GA4 implementado com bypass de AdBlock.
+- **Qualidade de Código**: Segue práticas de Clean Code com remoção de dead code, logs de debug e tratamento robusto de erros.
+- **Secure by Design**: Auditoria de segurança completa, zero vulnerabilidades conhecidas, dados sensíveis protegidos.
 
 ## 2. Arquitetura Técnica
 
@@ -39,7 +41,8 @@ O **Bisolhador** é um Dashboard de Análise de Repositórios GitHub de código 
 - **Frontend**: React 18 + Vite + Tailwind CSS.
 - **Bibliotecas**: react-chartjs-2 (gráficos), html2pdf.js (export PDF), @tanstack/react-query (data fetching/cache), react-i18next (internacionalização), react-ga4 (analytics).
 - **Integrations**: GitHub REST API v3.
-- **Performance**: React.lazy + Suspense (code splitting), Skeleton screens (LCP optimization).
+- **Performance**: React.lazy + Suspense (code splitting), Skeleton screens (LCP optimization), useMemo para otimização de re-renders em gráficos.
+- **Acessibilidade**: Conformidade WCAG AA com semântica de tabelas (scope="col"), aria-label/aria-hidden em ícones, leitores de tela suportados.
 - **Build**: Vite (HMR, fast refresh).
 - **Deploy**: GitHub Pages.
 

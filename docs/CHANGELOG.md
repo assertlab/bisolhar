@@ -15,6 +15,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fix: GitHub API 422 Error Handling
 - **Tratamento silencioso para erro 422**: FetchCodeFrequency agora retorna array vazio silenciosamente em repositórios gigantes.
 
+### Engineering & Quality
+- **Performance**: Otimização de renderização de gráficos com `useMemo` para evitar re-renders desnecessários em componentes Chart.js.
+- **Acessibilidade (A11y)**: Melhorias semânticas na tabela de Ranking (`scope="col"`) e ícones (`aria-label`, `aria-hidden`) para conformidade WCAG AA (Leitores de tela).
+- **Code Quality**: Remoção de logs de debug e código morto (Dead Code) pós-refatoração, fortalecimento do tratamento de erros no serviço de analytics.
+
 ---
 
 ## [2.6.0] - 2025-12-10

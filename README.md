@@ -14,6 +14,8 @@ Dashboard de Análise de Repositórios GitHub que transforma dados em insights p
 - **📄 Export PDF/JSON**: Relatórios completos em PDF e dados brutos em JSON para análise externa
 - **📡 Monitoramento de Uso**: Rastreamento de acessos e eventos (Buscas, Exports) com Google Analytics 4
 - **🛡️ Fail-Safe**: Tratamento robusto de erros e rate limits
+- **♿ Acessibilidade (WCAG AA)**: Semântica de tabelas, aria-label/aria-hidden em ícones, suporte a leitores de tela
+- **⚡ Performance Otimizada**: useMemo para gráficos, code splitting e skeleton screens
 
 ## 🚀 Como Rodar
 
