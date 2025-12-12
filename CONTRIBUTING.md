@@ -2,6 +2,11 @@
 
 Obrigado por seu interesse em contribuir com o **Bisolhador**! Esta é uma ferramenta de apoio ao ensino de Engenharia de Software. Siga os passos abaixo para contribuir de forma eficaz.
 
+## Pré-requisitos
+
+- Node.js (v18+)
+- NPM
+
 ## Como Rodar o Projeto Localmente
 
 1. **Clone o repositório**:
@@ -10,12 +15,29 @@ Obrigado por seu interesse em contribuir com o **Bisolhador**! Esta é uma ferra
    cd bisolhador
    ```
 
-2. **Abra o projeto no VS Code**:
-   - Instale a extensão "Live Server" se não tiver.
-   - Clique com o botão direito no arquivo `index.html` e selecione "Open with Live Server".
-   - O navegador abrirá com o projeto rodando localmente.
+2. **Instale as dependências**:
+   ```
+   npm install
+   ```
 
-Agora você pode testar e desenvolver as funcionalidades.
+3. **Configure o ambiente**:
+   - Crie um arquivo `.env` na raiz do projeto baseado no `.env.example`
+   - Preencha as variáveis necessárias:
+     - `VITE_SUPABASE_URL`: URL do seu projeto Supabase
+     - `VITE_SUPABASE_ANON_KEY`: Chave anônima do Supabase
+     - `VITE_GA_ID`: ID do Google Analytics 4 (opcional)
+
+4. **Execute o projeto**:
+   ```
+   npm run dev
+   ```
+
+5. **Ou faça o build para produção**:
+   ```
+   npm run build
+   ```
+
+A aplicação estará disponível em `http://localhost:5173`
 
 ## Como Abrir um Pull Request (PR)
 
@@ -33,7 +55,7 @@ Agora você pode testar e desenvolver as funcionalidades.
    ```
 
 4. **Faça suas alterações**:
-   - Teste localmente com Live Server.
+   - Teste localmente com `npm run dev`.
    - Siga o estilo de código do projeto.
 
 5. **Commite suas mudanças**:

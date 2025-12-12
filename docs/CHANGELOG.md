@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [2.7.1] - 2025-12-12
+
+### Security
+- Implementação de RPC segura no Supabase para validação de dados.
+- Bloqueio de INSERT direto via RLS (Hardening).
+
+### Docs
+- Atualização do guia de contribuição para stack Vite/React.
+
+---
+
 ## [2.7.0] - 2025-12-10
 
 ### New Feature: JSON Data Export
