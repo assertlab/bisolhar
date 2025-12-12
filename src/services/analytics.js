@@ -18,19 +18,18 @@ const analytics = {
       // TODO: Implementar Retry Logic (v3.0) - Adicionar tentativa de reenvio em caso de falha temporária
       (async () => {
         try {
-          const record = {
-            repo_name: data.name,
-            owner_type: data.ownerType,
-            language: data.language || null,
-            stars: data.stars || 0,
-            forks: data.forks || 0,
-            issues: data.issues || 0,
-            subscribers: data.subscribers || 0,
-            last_push_at: data.lastPush || null,
-            health_score: data.healthScore || 0,
-            status: 'success'
+          const rpcPayload = {
+            p_repo_name: data.name,
+            p_owner_type: data.ownerType,
+            p_language: data.language || null,
+            p_stars: data.stars || 0,
+            p_forks: data.forks || 0,
+            p_issues: data.issues || 0,
+            p_subscribers: data.subscribers || 0,
+            p_health_score: data.healthScore || 0,
+            p_last_push_at: data.lastPush || null
           };
-          const { error } = await supabase.from('analytics_searches').insert([record]);
+          const { error } = await supabase.rpc('registrar_busca', rpcPayload);
           if (error) {
             throw error;
           }
