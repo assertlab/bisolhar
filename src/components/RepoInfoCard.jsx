@@ -4,7 +4,7 @@ import { exportToPDF } from '../utils/pdfExporter.js';
 import { exportJson } from '../utils/exportJson.js';
 import analytics from '../services/analytics.js';
 
-export function RepoInfoCard({ data }) {
+export function RepoInfoCard({ data, onShareSuccess }) {
   const { t, i18n } = useTranslation();
   if (!data) return null;
 
@@ -47,6 +47,54 @@ export function RepoInfoCard({ data }) {
     exportJson(data, filename);
   };
 
+  const handleShare = async () => {
+    try {
+      let shareUrl = '';
+
+      if (data.searchId) {
+        // Já temos um ID salvo, gerar link direto para snapshot
+        shareUrl = `${window.location.origin}/?id=${data.searchId}`;
+      } else {
+        // Não temos ID, salvar primeiro e depois gerar link
+        const searchData = {
+          name: data.fullName,
+          ownerType: 'User', // Simplificado - poderia ser detectado melhor
+          language: data.language || null,
+          stars: data.metrics.stars,
+          forks: data.metrics.forks,
+          issues: data.metrics.openIssues,
+          subscribers: 0, // Não temos essa info
+          lastPush: data.createdAt,
+          healthScore: data.health.score
+        };
+
+        const searchId = await analytics.saveSearch(searchData);
+        if (searchId) {
+          shareUrl = `${window.location.origin}/?id=${searchId}`;
+          // Atualizar o data com o novo searchId
+          data.searchId = searchId;
+        } else {
+          throw new Error('Falha ao salvar busca');
+        }
+      }
+
+      // Copiar para clipboard
+      await navigator.clipboard.writeText(shareUrl);
+
+      // Chamar callback de sucesso
+      if (onShareSuccess) {
+        onShareSuccess();
+      }
+
+      // Mostrar toast de sucesso (usando alert por enquanto, já que não há sistema de toast)
+      alert('Link copiado!');
+
+    } catch (error) {
+      console.error('Erro ao compartilhar:', error);
+      alert('Erro ao gerar link de compartilhamento');
+    }
+  };
+
   return (
     <div className="bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-lg shadow-sm hover:shadow-md transition-shadow p-6 animate-fade-in relative z-10">
 
@@ -63,6 +111,16 @@ export function RepoInfoCard({ data }) {
           </p>
         </div>
         <div className="flex gap-2">
+          <button
+            onClick={handleShare}
+            className="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white text-sm font-medium rounded-lg border border-purple-600 hover:border-purple-700 focus:ring-4 focus:ring-purple-300 transition-colors"
+            title="Compartilhar Resultado"
+          >
+            <svg aria-hidden="true" className="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z"></path>
+            </svg>
+            Compartilhar
+          </button>
           <button
             onClick={handleDownloadJSON}
             className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white text-sm font-medium rounded-lg border border-green-600 hover:border-green-700 focus:ring-4 focus:ring-green-300 transition-colors"

@@ -1,4 +1,4 @@
-# Manual de Instruções para IAs: Bisolhador Dashboard v2.7.0
+# Manual de Instruções para IAs: Bisolhador Dashboard v2.7.2
 
 ## 1. Resumo do Projeto
 
@@ -22,6 +22,7 @@ O **Bisolhador** é um Dashboard de Análise de Repositórios GitHub de código 
 - Health Score baseado em governança comunitária.
 - Análise de hábitos de trabalho e maturidade de engenharia.
 - Contribuição de dados.
+- **v2.7.2**: Compartilhamento de Resultados (Permalinks) com Deep Linking e Snapshots históricos.
 - **v2.6.0**: Leaderboard público alimentado por logs imutáveis no Supabase.
 - **v2.5.0**: Supabase implementado para persistência de buscas (bypassing AdBlock) em paralelo com Google Analytics 4.
 - **v2.3.0**: Dark Mode completo e internacionalização (PT-BR/EN-US) com detecção automática.
@@ -29,6 +30,7 @@ O **Bisolhador** é um Dashboard de Análise de Repositórios GitHub de código 
 - **v2.1.0**: Export PDF funcional, gráficos inteligentes com smart trim, UX aprimorada com alertas inline.
 
 ### Estado Atual das Features
+- **Compartilhamento de Resultados**: Permalinks com Deep Linking (`/?q=owner/repo`) e Snapshots históricos (`/?id=123`) via RPC segura no Supabase.
 - **Data Mining**: Botão de exportação JSON com metadados de proveniência (versão/data) para auditoria e análise externa.
 - **Inteligência Coletiva**: Leaderboard público alimentado por logs imutáveis no Supabase.
 - **Analytics Híbrido**: Supabase + GA4 implementado com bypass de AdBlock.
@@ -36,6 +38,12 @@ O **Bisolhador** é um Dashboard de Análise de Repositórios GitHub de código 
 - **Secure by Design**: Auditoria de segurança completa, zero vulnerabilidades conhecidas, dados sensíveis protegidos.
 
 ## 2. Arquitetura Técnica
+
+### Backend / Supabase
+- **Escrita Exclusiva via RPC**: Todas as operações de escrita no banco utilizam RPCs seguros (`registrar_busca`) em vez de INSERT direto, garantindo validação e controle de acesso.
+- **Leitura de Histórico**: Dados históricos são recuperados via RPC dedicada (`obter_snapshot`) com parâmetros seguros.
+- **Schema da Tabela**: `analytics_searches` utiliza `id` do tipo `BIGINT` (não UUID) e `health_score` do tipo `NUMERIC` para compatibilidade com tipos numéricos do JavaScript.
+- **Segurança Hardening**: INSERT direto foi revogado para usuários anônimos via Row Level Security (RLS), forçando uso de RPCs validadas para todas as operações.
 
 ### Stack Tecnológico
 - **Frontend**: React 18 + Vite + Tailwind CSS.
@@ -67,6 +75,13 @@ O código está organizado em módulos ES6 modernos em `src/`, com responsabilid
 - Dados são buscados via `githubService`, processados localmente e gerenciados pelo hook `useRepository`.
 - Estado centralizado em React hooks com fail-safe para erros.
 - Nenhum banco de dados; dados persistem apenas na sessão.
+
+### Frontend / State Management
+- **Fluxo Híbrido de Dados**:
+  - **Live Mode**: Busca dados em tempo real na API do GitHub via Octokit quando não há parâmetros de URL.
+  - **Snapshot Mode**: Carrega dados históricos do Supabase via RPC quando a URL contém `?id=...`, populando o dashboard com dados estáticos.
+- **Deep Linking**: A aplicação sincroniza o estado da busca com a URL através de `pushState`, permitindo compartilhamento direto de resultados específicos (`/?q=owner/repo`).
+- **Adaptador de Dados**: Conversão automática de dados flat do Supabase para formato nested esperado pelos componentes React, com tratamento de valores nulos e campos ausentes.
 
 ## 3. Regras de Negócio Críticas
 

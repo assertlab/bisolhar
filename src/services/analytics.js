@@ -10,6 +10,37 @@ const analytics = {
     ReactGA.send({ hitType: "pageview", page: path });
   },
 
+  async saveSearch(data) {
+    if (!import.meta.env.VITE_SUPABASE_URL || !import.meta.env.VITE_SUPABASE_ANON_KEY) {
+      return null;
+    }
+
+    try {
+      const rpcPayload = {
+        p_repo_name: data.name,
+        p_owner_type: data.ownerType,
+        p_language: data.language || null,
+        p_stars: parseInt(data.stars) || 0,
+        p_forks: parseInt(data.forks) || 0,
+        p_issues: parseInt(data.issues) || 0,
+        p_subscribers: parseInt(data.subscribers) || 0,
+        p_health_score: parseFloat(data.healthScore) || 0,
+        p_last_push_at: data.lastPush || null
+      };
+
+      const { data: result, error } = await supabase.rpc('registrar_busca', rpcPayload);
+      if (error) {
+        throw error;
+      }
+
+      // Retorna o ID numérico
+      return result;
+    } catch (error) {
+      console.warn('[Analytics] Failed to save search:', error.message);
+      return null;
+    }
+  },
+
   trackSearch(data) {
     ReactGA.event({ category: "Search", action: "Analyze Repo", label: data.name });
 
@@ -22,11 +53,11 @@ const analytics = {
             p_repo_name: data.name,
             p_owner_type: data.ownerType,
             p_language: data.language || null,
-            p_stars: data.stars || 0,
-            p_forks: data.forks || 0,
-            p_issues: data.issues || 0,
-            p_subscribers: data.subscribers || 0,
-            p_health_score: data.healthScore || 0,
+            p_stars: parseInt(data.stars) || 0,
+            p_forks: parseInt(data.forks) || 0,
+            p_issues: parseInt(data.issues) || 0,
+            p_subscribers: parseInt(data.subscribers) || 0,
+            p_health_score: parseFloat(data.healthScore) || 0,
             p_last_push_at: data.lastPush || null
           };
           const { error } = await supabase.rpc('registrar_busca', rpcPayload);
@@ -37,6 +68,24 @@ const analytics = {
           console.warn('[Analytics] Failed to track search:', error.message);
         }
       })();
+    }
+  },
+
+  async getSnapshot(id) {
+    if (!import.meta.env.VITE_SUPABASE_URL || !import.meta.env.VITE_SUPABASE_ANON_KEY) {
+      return null;
+    }
+
+    try {
+      const { data, error } = await supabase.rpc('obter_snapshot', { p_id: parseInt(id) });
+      if (error) {
+        throw error;
+      }
+
+      return data;
+    } catch (error) {
+      console.warn('[Analytics] Failed to get snapshot:', error.message);
+      return null;
     }
   },
 

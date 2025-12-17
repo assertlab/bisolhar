@@ -6,10 +6,11 @@ Este documento rastreia a evolução do Bisolhador, desde sua concepção em Van
 
 ## 🔮 O Futuro (Próximas Versões)
 
-### 🔭 v3.0.0 - A Plataforma (Planejado)
+### 🔭 v3.0.0 - Time Machine (Planejado)
+*Nota: A infraestrutura de backend (snapshots históricos) foi antecipada na v2.7.2, permitindo foco na experiência temporal.*
 - [ ] **Resiliência de Analytics:** Implementar lógica de Retry com Exponential Backoff para o serviço de analytics (atual: fire-and-forget).
 - [ ] **UX de Falhas Parciais:** Melhorar feedback visual no Dashboard quando githubService retorna dados parciais (atual: silencia erro e retorna array vazio).
-- [ ] **Engenharia de Dados:** Expandir schema do Supabase para incluir github_created_at, bus_factor e top_contributors (preparação para Timeline/Time Machine).
+- [ ] **Timeline Histórica:** Visualização temporal de métricas com slider de datas baseado nos snapshots armazenados.
 - [ ] **Comparador de Repositórios:** Visualização "Split View" para comparar dois projetos lado a lado.
 - [ ] **Gamificação:** Badges de conquista para alunos (ex: "Clean Coder", "Bug Hunter").
 - [ ] **Painel Público de Repositórios Mais Buscados (Leaderboard):** Ranking público baseado em dados do Supabase.
@@ -18,6 +19,17 @@ Este documento rastreia a evolução do Bisolhador, desde sua concepção em Van
 ---
 
 ## ✅ O Presente (React Era)
+
+### v2.7.2 - Deep Linking & Snapshots ✅
+- [x] **Deep Linking na Busca:** URL reflete o estado da busca (`/?q=owner/repo`) para compartilhamento direto.
+- [x] **Permalinks/Snapshots:** URLs históricas (`/?id=123`) com dados estáticos do banco.
+- [x] **Backend:** Atualização do Schema (IDs como BIGINT, Scores como NUMERIC) e criação da RPC `obter_snapshot`.
+- [x] **UX:** Botão de compartilhamento de resultados com cópia automática para clipboard.
+
+### v2.7.1 - Security Hardening ✅
+- [x] **Backend RPC:** Implementação de RPC (`registrar_busca`) no Supabase para escrita segura.
+- [x] **Security Hardening:** Bloqueio total de INSERT direto na tabela `analytics_searches` para role anon via RLS.
+- [x] **Fix i18n:** Correção de internacionalização em métricas hardcoded (Lead Time/Divergência).
 
 ### v2.7.0 - Data Mining & Fixes ✅
 Ver [Especificação Técnica v2.7.0](docs/SPECS_v2.7.md)

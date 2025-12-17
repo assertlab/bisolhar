@@ -1,4 +1,4 @@
-# 🦈 Bisolhador Dashboard v2.7.1
+# 🦈 Bisolhador Dashboard v2.7.2
 
 Dashboard de Análise de Repositórios GitHub que transforma dados em insights poderosos para ensinamentos de Engenharia de Software. Ferramenta educacional desenvolvida pelo ASSERT Lab (UFPE) para apoiar professores e alunos na análise de práticas de desenvolvimento.
 
@@ -11,9 +11,10 @@ Dashboard de Análise de Repositórios GitHub que transforma dados em insights p
 - **👥 Bus Factor**: Análise de risco de dependência de contribuidores
 - **🔄 Dinâmica de Revisão**: Lead time e métricas de colaboração
 - **🏆 Leaderboard**: Ranking dos repositórios mais analisados com histórico de evolução
+- **🔗 Compartilhamento e Histórico**: Gere links permanentes (Snapshots) para suas análises. Ideal para avaliações de disciplinas, provas ou code reviews. O link congela o estado do repositório no momento da busca
 - **📄 Export PDF/JSON**: Relatórios completos em PDF e dados brutos em JSON para análise externa
-- **📡 Monitoramento de Uso**: Rastreamento de acessos e eventos (Buscas, Exports) com Google Analytics 4
-- **🛡️ Security-First (RPC Validation)**: Implementação de RPC segura no Supabase com validação de dados
+- **� Monitoramento de Uso**: Rastreamento de acessos e eventos (Buscas, Exports) com Google Analytics 4
+- **�🛡️ Security-First (RPC Validation)**: Implementação de RPC segura no Supabase com validação de dados
 - **🛡️ Fail-Safe**: Tratamento robusto de erros e rate limits
 - **♿ Acessibilidade (WCAG AA)**: Semântica de tabelas, aria-label/aria-hidden em ícones, suporte a leitores de tela
 - **⚡ Performance Otimizada**: useMemo para gráficos, code splitting e skeleton screens
@@ -50,6 +51,27 @@ VITE_SUPABASE_ANON_KEY=sua-chave-anonima
 ```
 
 A aplicação estará disponível em `http://localhost:5173`
+
+## 📖 Como Usar
+
+### Exemplos de Uso
+
+**Busca Direta por URL:**
+```
+https://assertlab.github.io/bisolhador/?q=facebook/react
+```
+
+**Acesso a Snapshot Histórico:**
+```
+https://assertlab.github.io/bisolhador/?id=123
+```
+
+### Funcionalidades Principais
+
+1. **Busque um repositório** usando o formato `owner/repo` (ex: `facebook/react`)
+2. **Analise as métricas** de saúde, maturidade e padrões de trabalho
+3. **Compartilhe resultados** clicando no botão "Compartilhar" para gerar links permanentes
+4. **Exporte relatórios** em PDF ou dados brutos em JSON
 
 ## 🛠️ Tech Stack
 

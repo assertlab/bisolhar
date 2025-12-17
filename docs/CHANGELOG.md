@@ -7,6 +7,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [2.7.2] - 2025-12-17
+
+### New Feature: Deep Linking & Snapshots
+- **Deep Linking**: Permitir compartilhar URL de busca (/?q=owner/repo) para acesso direto aos resultados.
+- **Snapshots**: Permitir compartilhar um registro histórico (/?id=123) com dados estáticos do banco.
+- **Botão Compartilhar**: Novo botão no RepoInfoCard para gerar links permanentes via clipboard.
+
+### Backend
+- **Atualização de RPCs no Supabase**: Suporte a IDs numéricos e leitura histórica de snapshots.
+- **saveSearch()**: Função assíncrona que retorna ID numérico do registro salvo.
+- **getSnapshot(id)**: Nova função para recuperar dados históricos do banco.
+
+### Engineering & UX
+- **Adaptador de Dados**: Conversão de dados flat do Supabase para formato nested esperado pelo dashboard.
+- **Modo Histórico**: Alerta visual azul indicando quando dados são estáticos (não refletem estado atual do GitHub).
+- **URL Management**: Gerenciamento inteligente de parâmetros de query (?id= e ?q=) na inicialização da aplicação.
+
+---
+
 ## [2.7.1] - 2025-12-12
 
 ### Security

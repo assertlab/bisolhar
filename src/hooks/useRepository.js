@@ -71,8 +71,8 @@ async function fetchRepositoryData(repoName) {
     // Analyze health score
     const health = analyzers.calculateHealthScore(communityProfile, repoData.description);
 
-    // Track search with consolidated data
-    analytics.trackSearch({
+    // Save search and get ID
+    const searchId = await analytics.saveSearch({
       name: repoData.full_name,
       ownerType: repoData.owner.type,
       language: repoData.language,
@@ -126,6 +126,7 @@ async function fetchRepositoryData(repoName) {
         ageText: age,
         createdAt: repoData.created_at, // ISO string for calculations
         createdAtFormatted: formattedDate, // Formatted string for display
+        searchId, // ID da busca salva no banco
         stats: {
             branches: branches.count,
             prs: pulls || 0,
