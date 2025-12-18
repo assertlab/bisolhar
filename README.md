@@ -1,4 +1,4 @@
-# 🦈 Bisolhador Dashboard v2.7.3
+# 🦈 Bisolhador Dashboard v2.7.4
 
 Dashboard de Análise de Repositórios GitHub que transforma dados em insights poderosos para ensinamentos de Engenharia de Software. Ferramenta educacional desenvolvida pelo ASSERT Lab (UFPE) para apoiar professores e alunos na análise de práticas de desenvolvimento.
 

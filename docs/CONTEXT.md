@@ -1,4 +1,4 @@
-# Manual de Instruções para IAs: Bisolhador Dashboard v2.7.3
+# Manual de Instruções para IAs: Bisolhador Dashboard v2.7.4
 
 ## 1. Resumo do Projeto
 

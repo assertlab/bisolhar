@@ -20,6 +20,9 @@ Este documento rastreia a evolução do Bisolhador, desde sua concepção em Van
 
 ## ✅ O Presente (React Era)
 
+### v2.7.4 - Hotfix - Correção de loop infinito ✅
+- [x] **Guard Clause**: Implementação de useRef para prevenir fetches duplicados no endpoint `buscar_snapshot_por_data`.
+
 ### v2.7.3 - Semantic Time Machine ✅
 - [x] **Busca Semântica Histórica:** URLs legíveis (`/?repo=owner/project&date=YYYY-MM-DD`) para snapshots por data.
 - [x] **Data da Análise:** Badge temporal no RepoInfoCard mostrando quando os dados foram coletados.
