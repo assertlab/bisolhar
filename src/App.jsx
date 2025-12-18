@@ -1,6 +1,6 @@
-import { useState, lazy, Suspense, useEffect, useCallback } from 'react';
+import { useState, lazy, Suspense, useEffect, useCallback, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { Header } from './components/Header';
 import { SearchBar } from './components/SearchBar';
 import { RepoInfoCard } from './components/RepoInfoCard';
@@ -32,6 +32,7 @@ function SkeletonChart() {
 
 function Dashboard() {
   const { t } = useTranslation();
+  const location = useLocation();
   const { data: repoData, loading, error, search } = useRepository();
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [dismissedError, setDismissedError] = useState(false);
@@ -40,6 +41,8 @@ function Dashboard() {
   const [snapshotData, setSnapshotData] = useState(null);
   const [snapshotLoading, setSnapshotLoading] = useState(false);
   const [semanticDate, setSemanticDate] = useState(null);
+
+  const lastFetchedParams = useRef('');
 
   const loadSnapshot = useCallback(async (id) => {
     setSnapshotLoading(true);
@@ -83,10 +86,17 @@ function Dashboard() {
   }, []);
 
   useEffect(() => {
-    analytics.trackPageView(window.location.pathname);
+    const currentParams = location.search;
+    // Se os parâmetros atuais forem iguais aos últimos buscados, ABORTA.
+    if (lastFetchedParams.current === currentParams) return;
+
+    // Se passou, atualiza a ref e segue com a busca
+    lastFetchedParams.current = currentParams;
+
+    analytics.trackPageView(location.pathname);
 
     // Verificar parâmetros da URL na inicialização - Hierarquia de prioridade
-    const urlParams = new URLSearchParams(window.location.search);
+    const urlParams = new URLSearchParams(location.search);
     const idParam = urlParams.get('id');
     const repoParam = urlParams.get('repo');
     const dateParam = urlParams.get('date');
@@ -108,7 +118,7 @@ function Dashboard() {
       // Fallback: Busca ao vivo (?q=...)
       search(queryParam);
     }
-  }, [loadSnapshot, loadSnapshotByDate, search]);
+  }, [location.search, loadSnapshot, loadSnapshotByDate, search]);
 
   const createMockRepoData = (snapshotData) => {
     // Adaptador: Converter dados flat do Supabase para formato nested esperado pelo dashboard

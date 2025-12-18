@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [2.7.4] - 2025-12-18
+
+### Fix
+- **Correção de loop infinito (re-render cycle) na busca semântica por data**: Implementação de guard clause com useRef para prevenir fetches duplicados no endpoint `buscar_snapshot_por_data`.
+
+---
+
 ## [2.7.3] - 2025-12-17
 
 ### Feature: Busca Semântica Histórica
