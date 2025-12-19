@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [2.8.2] - 2025-12-19
+
+### Feat (i18n): Timezone Detection
+- **Automatic Timezone Detection**: Implemented automatic timezone detection using `Intl.DateTimeFormat().resolvedOptions().timeZone`. Date searches now respect the user's local timezone (e.g., Japan, Lisbon) instead of being fixed to 'America/Recife'.
+
+### Backend: RPC Update
+- **Dynamic Timezone Parameter**: Updated `buscar_snapshot_por_data` RPC to accept dynamic `p_timezone` parameter.
+
+---
+
 ## [2.8.1] - 2025-12-18
 
 ### Architecture: Save on Load Strategy

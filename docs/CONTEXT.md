@@ -1,4 +1,4 @@
-# Manual de Instruções para IAs: Bisolhador Dashboard v2.7.4
+# Manual de Instruções para IAs: Bisolhador Dashboard v2.8.2
 
 ## 1. Resumo do Projeto
 
@@ -41,8 +41,9 @@ O **Bisolhador** é um Dashboard de Análise de Repositórios GitHub de código 
 ## 2. Arquitetura Técnica
 
 ### Backend / Supabase
+- **Estratégia de Dados 'Save on Load'**: Dados são salvos automaticamente no momento da busca, garantindo integridade histórica e IDs únicos, em vez de depender de ação explícita do usuário.
 - **Escrita Exclusiva via RPC**: Todas as operações de escrita no banco utilizam RPCs seguros (`registrar_busca`) em vez de INSERT direto, garantindo validação e controle de acesso.
-- **Leitura de Histórico**: Dados históricos são recuperados via RPC dedicada (`obter_snapshot`) com parâmetros seguros.
+- **Leitura de Histórico com Timezone Dinâmico**: Dados históricos são recuperados via RPC dedicada (`buscar_snapshot_por_data`) com detecção automática de fuso horário do usuário usando `Intl.DateTimeFormat().resolvedOptions().timeZone`.
 - **Schema da Tabela**: `analytics_searches` utiliza `id` do tipo `BIGINT` (não UUID) e `health_score` do tipo `NUMERIC` para compatibilidade com tipos numéricos do JavaScript.
 - **Segurança Hardening**: INSERT direto foi revogado para usuários anônimos via Row Level Security (RLS), forçando uso de RPCs validadas para todas as operações.
 

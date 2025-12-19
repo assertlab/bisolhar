@@ -20,6 +20,10 @@ Este documento rastreia a evolução do Bisolhador, desde sua concepção em Van
 
 ## ✅ O Presente (React Era)
 
+### v2.8.2 - Global Timezones & Auto-Persistence ✅
+- [x] **Correção de Persistência / Banco de Dados:** Implementação da estratégia "Save on Load" para garantir integridade histórica e IDs únicos automaticamente.
+- [x] **Suporte a Timezones / Internacionalização de datas:** Detecção automática de fuso horário usando `Intl.DateTimeFormat().resolvedOptions().timeZone` nas buscas por data.
+
 ### v2.7.4 - Hotfix - Correção de loop infinito ✅
 - [x] **Guard Clause**: Implementação de useRef para prevenir fetches duplicados no endpoint `buscar_snapshot_por_data`.
 

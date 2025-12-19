@@ -103,10 +103,15 @@ const analytics = {
     }
 
     try {
+      // Detecção automática do fuso (Ex: 'America/Recife', 'Europe/Lisbon')
+      const userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC';
+
       const { data, error } = await supabase.rpc('buscar_snapshot_por_data', {
         p_repo_name: repoName,
-        p_date: dateString
+        p_date: dateString,
+        p_timezone: userTimezone // <--- Novo parâmetro
       });
+
       if (error) {
         throw error;
       }
